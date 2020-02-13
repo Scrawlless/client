@@ -1,1 +1,3 @@
-# scrawlless-client
+# Scrawlless
+
+Scrawlless client application
