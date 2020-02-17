@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '', component: DashboardComponent,
     children: [
-      { path: '', loadChildren: () => import('../../views/landing-page/landing-page.module').then(m => m.LandingPageModule) },
+      { path: '', redirectTo: "tasks" },
       { path: 'tasks', loadChildren: () => import('../../views/tasks/tasks.module').then(m => m.TasksModule) },
       { path: 'friends', loadChildren: () => import('../../views/friends/friends.module').then(m => m.FriendsModule) },
       { path: 'messages', loadChildren: () => import('../../views/messages/messages.module').then(m => m.MessagesModule) },

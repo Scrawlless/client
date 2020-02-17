@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 import { MessagesRoutingModule } from './messages-routing.module';
 import { MessagesComponent } from './messages.component';
 
+import { SharedModule } from '../../../_modules/shared/shared.module';
 
 @NgModule({
   declarations: [MessagesComponent],
   imports: [
     CommonModule,
-    MessagesRoutingModule
+    MessagesRoutingModule,
+    SharedModule
   ]
 })
 export class MessagesModule { }

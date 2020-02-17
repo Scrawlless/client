@@ -1,1 +1,9 @@
-<p>dashboard works!</p>
+<div class="navigation">
+    <button mat-raised-button (click)="navigate('/dash/tasks')">Tasks</button>
+    <button mat-raised-button (click)="navigate('/dash/friends')">Friends</button>
+    <button mat-raised-button (click)="navigate('/dash/messages')">Messages</button>
+    <button mat-raised-button (click)="navigate('/dash/profile')">Profile</button>
+    <button mat-raised-button (click)="navigate('/dash/settings')">Settings</button>
+</div>
+
+<router-outlet></router-outlet>
