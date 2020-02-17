@@ -6,6 +6,7 @@ import { FriendsComponent } from './friends.component';
 
 import { SharedModule } from '../../../_modules/shared/shared.module';
 import { ApiService } from '../../../_services/api/api.service';
+import { DataService } from "../../../_services/data/data.service";
 
 @NgModule({
   declarations: [FriendsComponent],
@@ -15,7 +16,8 @@ import { ApiService } from '../../../_services/api/api.service';
     SharedModule
   ],
   providers: [
-    ApiService
+    ApiService,
+    DataService
   ]
 })
 export class FriendsModule { }

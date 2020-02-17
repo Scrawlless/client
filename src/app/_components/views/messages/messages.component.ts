@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ApiService } from '../../../_services/api/api.service';
+import { DataService } from "../../../_services/data/data.service";
 
 @Component({
   selector: 'messages',
@@ -13,6 +14,7 @@ export class MessagesComponent implements OnInit {
 
   constructor(
     private api: ApiService,
+    private data: DataService,
     private notification: MatSnackBar
   ) { }
 
@@ -24,9 +26,11 @@ export class MessagesComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.api.test("Messages").subscribe((result: any) => {
       this.openSnackBar(result.message, "Nice 👌");
+
+      this.data.changeMessage(result.message);
     }, (err) => {
       this.loading = false;
       this.openSnackBar(err.error.message, "Not Good 👎");

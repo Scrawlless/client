@@ -6,6 +6,7 @@ import { MessagesComponent } from './messages.component';
 
 import { SharedModule } from '../../../_modules/shared/shared.module';
 import { ApiService } from '../../../_services/api/api.service';
+import { DataService } from "../../../_services/data/data.service";
 
 @NgModule({
   declarations: [MessagesComponent],
@@ -15,7 +16,8 @@ import { ApiService } from '../../../_services/api/api.service';
     SharedModule
   ],
   providers: [
-    ApiService
+    ApiService,
+    DataService
   ]
 })
 export class MessagesModule { }

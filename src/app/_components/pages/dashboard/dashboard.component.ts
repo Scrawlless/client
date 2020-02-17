@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ApiService } from '../../../_services/api/api.service';
+import { DataService } from "../../../_services/data/data.service";
 
 @Component({
   selector: 'dashboard',
@@ -15,10 +16,14 @@ export class DashboardComponent implements OnInit {
   constructor(
     private router: Router,
     private api: ApiService,
+    private data: DataService,
     private notification: MatSnackBar
   ) { }
 
+  data_subscription: any;
+
   loading: boolean = false;
+  title: string = "Initial title";
 
   navigate(path: string): void {
     this.router.navigate([path]);
@@ -37,6 +42,15 @@ export class DashboardComponent implements OnInit {
       this.loading = false;
       this.openSnackBar(err.error.message, "Not Good 👎");
     });
+
+    this.data.currentMessage.subscribe((message) => {
+      console.log(message);
+      this.title = message;
+    });
+  }
+
+  ngOnDestroy(): void {
+    //this.data_subscription.unsubscribe();
   }
 
 }
