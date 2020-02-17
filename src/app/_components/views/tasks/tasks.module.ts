@@ -5,7 +5,6 @@ import { TasksRoutingModule } from './tasks-routing.module';
 import { TasksComponent } from './tasks.component';
 
 import { SharedModule } from '../../../_modules/shared/shared.module';
-import { ApiService } from '../../../_services/api/api.service';
 
 @NgModule({
   declarations: [TasksComponent],
@@ -13,9 +12,6 @@ import { ApiService } from '../../../_services/api/api.service';
     CommonModule,
     TasksRoutingModule,
     SharedModule
-  ],
-  providers: [
-    ApiService
   ]
 })
 export class TasksModule { }

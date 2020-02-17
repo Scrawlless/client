@@ -5,8 +5,6 @@ import { IndexRoutingModule } from './index-routing.module';
 import { IndexComponent } from './index.component';
 
 import { SharedModule } from '../../../_modules/shared/shared.module';
-import { ApiService } from '../../../_services/api/api.service';
-import { DataService } from '../../../_services/data/data.service';
 
 @NgModule({
   declarations: [IndexComponent],
@@ -14,10 +12,6 @@ import { DataService } from '../../../_services/data/data.service';
     CommonModule,
     IndexRoutingModule,
     SharedModule
-  ],
-  providers: [
-    ApiService,
-    DataService
   ]
 })
 export class IndexModule { }

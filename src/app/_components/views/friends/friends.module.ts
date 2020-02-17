@@ -5,8 +5,6 @@ import { FriendsRoutingModule } from './friends-routing.module';
 import { FriendsComponent } from './friends.component';
 
 import { SharedModule } from '../../../_modules/shared/shared.module';
-import { ApiService } from '../../../_services/api/api.service';
-import { DataService } from "../../../_services/data/data.service";
 
 @NgModule({
   declarations: [FriendsComponent],
@@ -14,10 +12,6 @@ import { DataService } from "../../../_services/data/data.service";
     CommonModule,
     FriendsRoutingModule,
     SharedModule
-  ],
-  providers: [
-    ApiService,
-    DataService
   ]
 })
 export class FriendsModule { }

@@ -37,12 +37,6 @@ export class IndexComponent implements OnInit {
       this.loading = false;
       this.openSnackBar(err.error.message, "Not Good 👎");
     });
-
-    this.data_subscription = this.data.currentMessage.subscribe(message => this.title = message);
-  }
-
-  ngOnDestroy(): void {
-    this.data_subscription.unsubscribe();
   }
 
 }

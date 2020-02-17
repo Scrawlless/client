@@ -5,7 +5,6 @@ import { LandingPageRoutingModule } from './landing-page-routing.module';
 import { LandingPageComponent } from './landing-page.component';
 
 import { SharedModule } from '../../../_modules/shared/shared.module';
-import { ApiService } from '../../../_services/api/api.service';
 
 @NgModule({
   declarations: [LandingPageComponent],
@@ -13,9 +12,6 @@ import { ApiService } from '../../../_services/api/api.service';
     CommonModule,
     LandingPageRoutingModule,
     SharedModule
-  ],
-  providers: [
-    ApiService
   ]
 })
 export class LandingPageModule { }

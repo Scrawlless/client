@@ -27,14 +27,14 @@ export class FriendsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.api.test("Friends").subscribe((result: any) => {
-      this.openSnackBar(result.message, "Nice 👌");
+    this.data.changeMessage("Friends");
 
-      this.data.changeMessage(result.message);
+    /*this.api.test("Friends").subscribe((result: any) => {
+      this.openSnackBar(result.message, "Nice 👌");
     }, (err) => {
       this.loading = false;
       this.openSnackBar(err.error.message, "Not Good 👎");
-    });
+    });*/
   }
 
 }

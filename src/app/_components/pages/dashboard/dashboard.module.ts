@@ -5,8 +5,6 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 
 import { SharedModule } from '../../../_modules/shared/shared.module';
-import { ApiService } from '../../../_services/api/api.service';
-import { DataService } from "../../../_services/data/data.service";
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -14,10 +12,6 @@ import { DataService } from "../../../_services/data/data.service";
     CommonModule,
     DashboardRoutingModule,
     SharedModule
-  ],
-  providers: [
-    ApiService,
-    DataService
   ]
 })
 export class DashboardModule { }

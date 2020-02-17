@@ -5,7 +5,6 @@ import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsComponent } from './settings.component';
 
 import { SharedModule } from '../../../_modules/shared/shared.module';
-import { ApiService } from '../../../_services/api/api.service';
 
 @NgModule({
   declarations: [SettingsComponent],
@@ -13,9 +12,6 @@ import { ApiService } from '../../../_services/api/api.service';
     CommonModule,
     SettingsRoutingModule,
     SharedModule
-  ],
-  providers: [
-    ApiService
   ]
 })
 export class SettingsModule { }

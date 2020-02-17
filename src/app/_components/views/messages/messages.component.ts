@@ -27,14 +27,14 @@ export class MessagesComponent implements OnInit {
   }
 
   ngOnInit(): void {    
-    this.api.test("Messages").subscribe((result: any) => {
+    this.data.changeMessage("Messages");
+    
+    /*this.api.test("Messages").subscribe((result: any) => {
       this.openSnackBar(result.message, "Nice 👌");
-
-      this.data.changeMessage(result.message);
     }, (err) => {
       this.loading = false;
       this.openSnackBar(err.error.message, "Not Good 👎");
-    });
+    });*/
   }
 
 }
