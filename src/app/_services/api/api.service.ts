@@ -26,8 +26,8 @@ export class ApiService {
   }
 
   test(data: any = {}): Observable<Object> {
-    var req = JSON.stringify(data);
-
+    var req = JSON.stringify({ name: data });
+    console.log(req);
     let headers = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');
     headers = headers.append('Content-Type', 'application/json');

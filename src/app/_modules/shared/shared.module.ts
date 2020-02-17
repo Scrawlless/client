@@ -13,14 +13,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatButtonModule
+    MatSnackBarModule
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatButtonModule
+    MatSnackBarModule
   ],
   entryComponents: []
 })
