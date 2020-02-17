@@ -14,7 +14,7 @@ export class FriendsComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private data: DataService,
+    private appData: DataService,
     private notification: MatSnackBar
   ) { }
 
@@ -27,14 +27,14 @@ export class FriendsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.data.changeMessage("Friends");
-
-    /*this.api.test("Friends").subscribe((result: any) => {
+    this.api.test("Friends").subscribe((result: any) => {
       this.openSnackBar(result.message, "Nice 👌");
-    }, (err) => {
+      this.appData.changeMessage(result.message);
       this.loading = false;
+    }, (err) => {
       this.openSnackBar(err.error.message, "Not Good 👎");
-    });*/
+      this.loading = false;
+    });
   }
 
 }

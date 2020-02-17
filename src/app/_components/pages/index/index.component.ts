@@ -14,7 +14,7 @@ export class IndexComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private data: DataService,
+    private appData: DataService,
     private notification: MatSnackBar
   ) { }
 
@@ -30,13 +30,21 @@ export class IndexComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.data_subscription = this.appData.title.subscribe((message) => {
+      this.title = message;
+    });
+
     this.api.test("Index").subscribe((result: any) => {
       this.openSnackBar(result.message, "Nice 👌");
-      this.title = result.message;
-    }, (err) => {
       this.loading = false;
+    }, (err) => {
       this.openSnackBar(err.error.message, "Not Good 👎");
+      this.loading = false;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.data_subscription.unsubscribe();
   }
 
 }

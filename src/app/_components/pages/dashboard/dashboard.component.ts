@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private router: Router,
     private api: ApiService,
-    private data: DataService,
+    private appData: DataService,
     private notification: MatSnackBar
   ) { }
 
@@ -36,21 +36,21 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.api.test("Dashboard").subscribe((result: any) => {
-      this.openSnackBar(result.message, "Nice 👌");
-    }, (err) => {
-      this.loading = false;
-      this.openSnackBar(err.error.message, "Not Good 👎");
+    this.data_subscription = this.appData.title.subscribe((message) => {
+      this.title = message;
     });
 
-    this.data.currentMessage.subscribe((message) => {
-      console.log(message);
-      this.title = message;
+    this.api.test("Dashboard").subscribe((result: any) => {
+      this.openSnackBar(result.message, "Nice 👌");
+      this.loading = false;
+    }, (err) => {
+      this.openSnackBar(err.error.message, "Not Good 👎");
+      this.loading = false;
     });
   }
 
   ngOnDestroy(): void {
-    //this.data_subscription.unsubscribe();
+    this.data_subscription.unsubscribe();
   }
 
 }

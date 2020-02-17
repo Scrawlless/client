@@ -14,7 +14,7 @@ export class MessagesComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private data: DataService,
+    private appData: DataService,
     private notification: MatSnackBar
   ) { }
 
@@ -26,15 +26,15 @@ export class MessagesComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {    
-    this.data.changeMessage("Messages");
-    
-    /*this.api.test("Messages").subscribe((result: any) => {
+  ngOnInit(): void {
+    this.api.test("Messages").subscribe((result: any) => {
       this.openSnackBar(result.message, "Nice 👌");
-    }, (err) => {
+      this.appData.changeMessage(result.message);
       this.loading = false;
+    }, (err) => {
       this.openSnackBar(err.error.message, "Not Good 👎");
-    });*/
+      this.loading = false;
+    });
   }
 
 }

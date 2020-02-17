@@ -6,9 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { ApiService } from '../../_services/api/api.service';
-import { DataService } from "../../_services/data/data.service";
-
 @NgModule({
   declarations: [],
   imports: [
@@ -24,10 +21,6 @@ import { DataService } from "../../_services/data/data.service";
     ReactiveFormsModule,
     MatButtonModule,
     MatSnackBarModule
-  ],
-  providers: [
-    ApiService,
-    DataService
   ],
   entryComponents: []
 })

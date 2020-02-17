@@ -7,6 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
 import { BaseHrefModule } from './_modules/base-href/base-href.module';
+import { DataService } from "./_services/data/data.service";
+import { ApiService } from './_services/api/api.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,10 @@ import { BaseHrefModule } from './_modules/base-href/base-href.module';
     HttpClientModule,
     BaseHrefModule
   ],
-  providers: [],
+  providers: [
+    ApiService,
+    DataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
