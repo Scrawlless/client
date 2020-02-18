@@ -4,10 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "serve": "ng serve --host 0.0.0.0 --disable-host-check",
+    "build": "ng build --prod --aot"
   },
   "private": true,
   "dependencies": {
