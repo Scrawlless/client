@@ -14,9 +14,7 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private links: BaseHrefModule
-  ) {
-    this.updateUserData();
-  }
+  ) { /*this.updateUserData();*/ } // Hardcoded solution while we don't have functioning back-end
 
   private updateUserData() {
     this.profile().subscribe((data) => {
