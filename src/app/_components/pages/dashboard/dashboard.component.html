@@ -1,13 +1,22 @@
-<div class="header">
-    <h4>{{title}}</h4>
-</div>
+<mat-drawer-container class="main-drawer">
+    <mat-drawer #drawer mode="side">
+        <div class="navigation">
+            <button matRipple class="regular-color round-button" (click)="navigate('/dash/tasks')">Tasks</button>
+            <button matRipple class="regular-color round-button" (click)="navigate('/dash/friends')">Friends</button>
+            <button matRipple class="regular-color round-button" (click)="navigate('/dash/messages')">Messages</button>
+            <button matRipple class="regular-color round-button" (click)="navigate('/dash/profile')">Profile</button>
+            <button matRipple class="regular-color round-button" (click)="navigate('/dash/settings')">Settings</button>
+        </div>
+    </mat-drawer>
 
-<div class="navigation">
-    <button mat-raised-button (click)="navigate('/dash/tasks')">Tasks</button>
-    <button mat-raised-button (click)="navigate('/dash/friends')">Friends</button>
-    <button mat-raised-button (click)="navigate('/dash/messages')">Messages</button>
-    <button mat-raised-button (click)="navigate('/dash/profile')">Profile</button>
-    <button mat-raised-button (click)="navigate('/dash/settings')">Settings</button>
-</div>
+    <div>
+        <div class="header">
+            <h4>{{title}}</h4>
+        </div>
+        <button type="button" mat-button (click)="drawer.toggle()">
+            Toggle sidenav
+        </button>
+        <router-outlet></router-outlet>
+    </div>
 
-<router-outlet></router-outlet>
+</mat-drawer-container>
