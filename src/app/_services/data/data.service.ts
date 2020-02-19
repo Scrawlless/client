@@ -11,9 +11,11 @@ export class DataService {
   tasks: BehaviorSubject<any>;
   friends: BehaviorSubject<any>;
   dialogs: BehaviorSubject<any>;
+  mobile: BehaviorSubject<boolean>;
 
   constructor() {
     this.title = new BehaviorSubject("Default Title");
+    
     this.user = new BehaviorSubject({
       name: "Dzmitry Kuzmitch",
       email: "kuzya19989@gmail.com",
@@ -51,6 +53,8 @@ export class DataService {
         id: 0
       }
     ]);
+
+    this.mobile = new BehaviorSubject(undefined);
   }
 
   changeTitle(message: string) {
@@ -67,5 +71,8 @@ export class DataService {
   }
   updateDialogs(dialogs: any) {
     this.dialogs.next(dialogs);
+  }
+  updateMobile(mobile: boolean) {
+    this.mobile.next(mobile);
   }
 }
