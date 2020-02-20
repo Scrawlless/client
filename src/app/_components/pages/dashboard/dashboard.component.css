@@ -1,9 +1,10 @@
 .avatar {
-    height: 30px;
-    width: 30px;
+    height: 40px !important;
+    width: 40px !important;
     background-image: url("../../../../assets/favicon.ico");
     background-position: center;
     background-size: contain;
+    border-radius: 50%;
 }
 
 .main-drawer {

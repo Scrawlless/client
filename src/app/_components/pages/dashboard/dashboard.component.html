@@ -2,7 +2,7 @@
     <img src="../../../../assets/title_small.png">
     <button mat-flat-button class="accent-color" *ngIf="!mobile" [matMenuTriggerFor]="profile_menu" [disabled]="(mobile && drawer.opened)">
         <div style="display: flex; align-items: center; justify-content: space-between;">
-            <span style="margin-right: 5px;">Dzmitry Kuzmitch</span>
+            <span style="margin-right: 5px;">{{ user.name }}</span>
             <div class="avatar"></div>
         </div>
     </button>
@@ -25,12 +25,6 @@
                 <button matRipple class="accent-color round-button" (click)="navigate('/dash/messages')">
                     <mat-icon>chat</mat-icon>
                 </button>
-                <button matRipple class="accent-color round-button" (click)="navigate('/dash/profile')">
-                    <mat-icon>person</mat-icon>
-                </button>
-                <button matRipple class="accent-color round-button" (click)="navigate('/dash/settings')">
-                    <mat-icon>settings</mat-icon>
-                </button>
             </div>
         </div>
     </mat-drawer>
@@ -42,12 +36,12 @@
 </mat-drawer-container>
 
 <mat-menu #profile_menu="matMenu">
-    <button mat-menu-item (click)="popupAction('profile-info')">
-        <mat-icon>edit</mat-icon>
+    <button mat-menu-item (click)="navigate('/dash/profile')">
+        <mat-icon>person</mat-icon>
         <span>{{lang.t("ep")}}</span>
     </button>
-    <button mat-menu-item (click)="popupAction('profile-settings')">
-        <mat-icon>build</mat-icon>
+    <button mat-menu-item (click)="navigate('/dash/settings')">
+        <mat-icon>settings</mat-icon>
         <span>{{lang.t("eps")}}</span>
     </button>
     <button mat-menu-item (click)="auth.logout();">
