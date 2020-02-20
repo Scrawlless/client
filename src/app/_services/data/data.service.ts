@@ -10,12 +10,13 @@ export class DataService {
   user: BehaviorSubject<any>;
   tasks: BehaviorSubject<any>;
   friends: BehaviorSubject<any>;
+  teachers: BehaviorSubject<any>;
   dialogs: BehaviorSubject<any>;
   mobile: BehaviorSubject<boolean>;
 
   constructor() {
     this.title = new BehaviorSubject("Default Title");
-    
+
     this.user = new BehaviorSubject({
       name: "Dzmitry Kuzmitch",
       email: "kuzya19989@gmail.com",
@@ -46,11 +47,23 @@ export class DataService {
         id: 3
       }
     ]);
+    this.teachers = new BehaviorSubject([
+      {
+        name: "Professor Steven",
+        email: "steven@gmail.com",
+        id: 0
+      }
+    ]);
     this.dialogs = new BehaviorSubject([
       {
         name: "Tom",
         friend_id: 1,
         id: 0
+      },
+      {
+        name: "MD",
+        friend_id: 3,
+        id: 1
       }
     ]);
 
@@ -68,6 +81,9 @@ export class DataService {
   }
   updateFriends(friends: any) {
     this.friends.next(friends);
+  }
+  updateTeachers(teachers: any) {
+    this.teachers.next(teachers);
   }
   updateDialogs(dialogs: any) {
     this.dialogs.next(dialogs);
