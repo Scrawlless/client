@@ -1,3 +1,18 @@
+/deep/ .accent-color {
+    color: #f2f2f2 !important;
+    background-color: #ed7e28 !important;
+}
+/deep/ button.accent-color:hover {
+    background-color: #d07127 !important;
+}
+/deep/ .primary-color {
+    color: #f2f2f2 !important;
+    background-color: #427a8d !important;
+}
+/deep/ .regular-color {
+    background-color: #f2f2f2 !important;
+}
+
 /deep/ .global-loading {
     height: calc(100vh - 56px);
     margin: 0;

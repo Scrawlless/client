@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ApiService } from '../../../_services/api/api.service';
+import { AuthService } from '../../../_services/auth/auth.service';
 import { DataService } from "../../../_services/data/data.service";
+import { LanguageService } from '../../../_services/language/language.service';
 
 @Component({
   selector: 'dashboard',
@@ -14,16 +16,23 @@ import { DataService } from "../../../_services/data/data.service";
 export class DashboardComponent implements OnInit {
 
   constructor(
+    public auth: AuthService,
+    public lang: LanguageService,
+    public appData: DataService,
     private router: Router,
     private api: ApiService,
-    private appData: DataService,
     private notification: MatSnackBar
   ) { }
 
-  data_subscription: any;
+  title_sub: any;
+  mobile_sub: any;
+  user_sub: any;
 
+  title: string;
   loading: boolean = false;
-  title: string = "Initial title";
+  opened: boolean = true;
+  mobile: boolean;
+  user: any = {};
 
   navigate(path: string): void {
     this.router.navigate([path]);
@@ -36,8 +45,16 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.data_subscription = this.appData.title.subscribe((message) => {
-      this.title = message;
+    this.title_sub = this.appData.title.subscribe((title) => {
+      this.title = title;
+    });
+
+    this.mobile_sub = this.appData.mobile.subscribe((mobile) => {
+      this.mobile = mobile;
+    });
+
+    this.user_sub = this.appData.user.subscribe((user) => {
+      this.user = user;
     });
 
     this.api.test("Dashboard").subscribe((result: any) => {
@@ -50,7 +67,8 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.data_subscription.unsubscribe();
+    this.title_sub.unsubscribe();
+    this.mobile_sub.unsubscribe();
   }
 
 }

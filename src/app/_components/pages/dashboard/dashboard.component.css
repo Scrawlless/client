@@ -1,3 +1,42 @@
+.avatar {
+    height: 40px !important;
+    width: 40px !important;
+    background-image: url("../../../../assets/favicon.ico");
+    background-position: center;
+    background-size: contain;
+    border-radius: 50%;
+}
+
+.main-drawer {
+    height: calc(100% - 50px);
+}
+
+.toolbar {
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .navigation {
     display: flex;
+}
+
+.navigation-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.round-button {
+    outline: 0 !important;
+    cursor: pointer;
+    height: 60px;
+    width: 60px;
+    margin: 1px 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 70px;
+    box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12);
 }

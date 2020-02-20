@@ -29,7 +29,7 @@ export class FriendsComponent implements OnInit {
   ngOnInit(): void {
     this.api.test("Friends").subscribe((result: any) => {
       this.openSnackBar(result.message, "Nice 👌");
-      this.appData.changeMessage(result.message);
+      this.appData.changeTitle(result.message);
       this.loading = false;
     }, (err) => {
       this.openSnackBar(err.error.message, "Not Good 👎");

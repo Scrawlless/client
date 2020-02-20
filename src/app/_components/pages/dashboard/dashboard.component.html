@@ -1,13 +1,51 @@
-<div class="header">
-    <h4>{{title}}</h4>
-</div>
+<div class="primary-color toolbar">
+    <img src="../../../../assets/title_small.png">
+    <button mat-flat-button class="accent-color" *ngIf="!mobile" [matMenuTriggerFor]="profile_menu" [disabled]="(mobile && drawer.opened)">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="margin-right: 5px;">{{ user.name }}</span>
+            <div class="avatar"></div>
+        </div>
+    </button>
 
-<div class="navigation">
-    <button mat-raised-button (click)="navigate('/dash/tasks')">Tasks</button>
-    <button mat-raised-button (click)="navigate('/dash/friends')">Friends</button>
-    <button mat-raised-button (click)="navigate('/dash/messages')">Messages</button>
-    <button mat-raised-button (click)="navigate('/dash/profile')">Profile</button>
-    <button mat-raised-button (click)="navigate('/dash/settings')">Settings</button>
+    <button mat-fab *ngIf="mobile" color="warn" [matMenuTriggerFor]="profile_menu" class="custom-button"
+        [disabled]="(mobile && drawer.opened)">
+        <div class="avatar"></div>
+    </button>
 </div>
+<mat-drawer-container class="main-drawer">
+    <mat-drawer class="primary-color" #drawer mode="side" [opened]="opened">
+        <div class="navigation">
+            <div class="navigation-buttons">
+                <button matRipple class="accent-color round-button" (click)="navigate('/dash/tasks')">
+                    <mat-icon>menu_book</mat-icon>
+                </button>
+                <button matRipple class="accent-color round-button" (click)="navigate('/dash/friends')">
+                    <mat-icon>people</mat-icon>
+                </button>
+                <button matRipple class="accent-color round-button" (click)="navigate('/dash/messages')">
+                    <mat-icon>chat</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-drawer>
 
-<router-outlet></router-outlet>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+
+</mat-drawer-container>
+
+<mat-menu #profile_menu="matMenu">
+    <button mat-menu-item (click)="navigate('/dash/profile')">
+        <mat-icon>person</mat-icon>
+        <span>{{lang.t("ep")}}</span>
+    </button>
+    <button mat-menu-item (click)="navigate('/dash/settings')">
+        <mat-icon>settings</mat-icon>
+        <span>{{lang.t("eps")}}</span>
+    </button>
+    <button mat-menu-item (click)="auth.logout();">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>{{lang.t("lg")}}</span>
+    </button>
+</mat-menu>
