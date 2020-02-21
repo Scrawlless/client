@@ -15,15 +15,20 @@ export class AppComponent {
   ) {
     this.mobileQuery = this.mediaMatcher.matchMedia('(max-width: 640px)');
 
-    this.mobileQueryListener = () => {
+    this._mobileQueryListener = () => {
       this.appData.updateMobile(this.mobileQuery.matches);
     };
+
+    if (this.mobileQuery.addEventListener) {
+      this.mobileQuery.addEventListener("change", this._mobileQueryListener);
+    } else {
+      this.mobileQuery.addListener(this._mobileQueryListener);
+    }
     
-    this.mobileQuery.addEventListener("change", this.mobileQueryListener);
     this.appData.updateMobile(this.mobileQuery.matches);
   }
 
-  public mobileQueryListener = () => { };
+  public _mobileQueryListener = () => { };
   mobileQuery: MediaQueryList;
 
   title = 'Scrawlless';
