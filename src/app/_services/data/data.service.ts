@@ -11,6 +11,7 @@ export class DataService {
   tasks: BehaviorSubject<any>;
   friends: BehaviorSubject<any>;
   teachers: BehaviorSubject<any>;
+  users: BehaviorSubject<any>;
   dialogs: BehaviorSubject<any>;
   mobile: BehaviorSubject<boolean>;
 
@@ -34,24 +35,78 @@ export class DataService {
       {
         name: "Tom",
         email: "tom@gmail.com",
+        isStudent: true,
+        isAdded: true,
+        status: 0,
         id: 1
       },
       {
         name: "Matthew",
         email: "matthew@gmail.com",
+        isStudent: true,
+        isAdded: true,
+        status: 0,
         id: 2
       },
       {
         name: "MD",
         email: "md@gmail.com",
+        isStudent: true,
+        isAdded: true,
+        status: 0,
         id: 3
-      }
+      },
     ]);
     this.teachers = new BehaviorSubject([
       {
         name: "Professor Steven",
         email: "steven@gmail.com",
+        isStudent: false,
+        isAdded: true,
+        status: 1,
         id: 0
+      }
+    ]);
+    this.users = new BehaviorSubject([
+      {
+        name: "Professor Steven",
+        email: "steven@gmail.com",
+        isStudent: false,
+        isAdded: true,
+        status: 1,
+        id: 0
+      },
+      {
+        name: "Tom",
+        email: "tom@gmail.com",
+        isStudent: true,
+        isAdded: true,
+        status: 0,
+        id: 1
+      },
+      {
+        name: "Matthew",
+        email: "matthew@gmail.com",
+        isStudent: true,
+        isAdded: true,
+        status: 0,
+        id: 2
+      },
+      {
+        name: "MD",
+        email: "md@gmail.com",
+        isStudent: true,
+        isAdded: true,
+        status: 0,
+        id: 3
+      },
+      {
+        name: "John",
+        email: "john@gmail.com",
+        isStudent: true,
+        isAdded: false,
+        status: 0,
+        id: 4
       }
     ]);
     this.dialogs = new BehaviorSubject([
