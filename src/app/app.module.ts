@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BaseHrefModule } from './_modules/base-href/base-href.module';
 import { DataService } from "./_services/data/data.service";
 import { ApiService } from './_services/api/api.service';
+import { CanvasService } from './_services/canvas/canvas.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ApiService } from './_services/api/api.service';
   ],
   providers: [
     ApiService,
-    DataService
+    DataService,
+    CanvasService
   ],
   bootstrap: [AppComponent]
 })
