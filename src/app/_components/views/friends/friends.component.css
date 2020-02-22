@@ -1,0 +1,56 @@
+.sidenav-container {
+    padding: 8px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.sidenav-menu {
+    background-color: #ffffff;
+    padding: 16px;
+}
+
+.sidebar-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+
+.profile-card {
+    margin: 8px;
+}
+
+.profile-header-image {
+    background-size: cover;
+}
+
+.dot {
+    height: 8px;
+    width: 8px;
+    margin-bottom: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-online {
+    background-color: #5EBA7D;
+}
+
+.dot-busy {
+    background-color: red;
+}
+
+.dot-offline {
+    opacity: 100%;
+}
+
+.search-form {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.search-full-width {
+    width: 100%;
+}
