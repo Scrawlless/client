@@ -20,6 +20,13 @@ export class MessagesComponent implements OnInit {
 
   loading: boolean = false;
 
+  user_sub: any;
+  dialogs_sub: any;
+
+  user: any = {};
+  dialogs: any = [];
+  currentDialog: any = {};
+
   openSnackBar(message: string, action: string) {
     this.notification.open(message, action, {
       duration: 2000,
@@ -27,6 +34,17 @@ export class MessagesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user_sub = this.appData.user.subscribe((user) => {
+      this.user = user;
+    });
+
+    this.dialogs_sub = this.appData.dialogs.subscribe((dialogs) => {
+      this.dialogs = dialogs;
+      if(this.dialogs.length > 0){
+        this.currentDialog = this.dialogs[0]
+      }
+    });
+
     this.api.test("Messages").subscribe((result: any) => {
       this.openSnackBar(result.message, "Nice 👌");
       this.appData.changeTitle(result.message);
@@ -35,6 +53,13 @@ export class MessagesComponent implements OnInit {
       this.openSnackBar(err.error.message, "Not Good 👎");
       this.loading = false;
     });
+  }
+
+  openDialog(id: any): void {
+    this.currentDialog = this.dialogs.find((dialog: any) => {
+      return dialog.id === id
+    });
+
   }
 
 }
