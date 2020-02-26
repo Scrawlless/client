@@ -70,15 +70,19 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
       return dialog.id === id
     });
     this.activeId = this.currentDialog.id;
-    this.messageContainer.scrollTop = this.messageContainer.scrollHeight;
+    this.scrollToBottom()
   }
 
   sendMessage(): void {
     if(this.messageInput.length > 0) {
       this.currentDialog.messages.push({content: this.messageInput, isSender: true});
       this.messageInput = "";
-      this.messageContainer.scrollTop = this.messageContainer.scrollHeight;
+      this.scrollToBottom()
     }
+  }
+
+  scrollToBottom(): void {
+    this.messageContainer.scrollTop = this.messageContainer.scrollHeight;
   }
 
 }
