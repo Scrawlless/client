@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav mode="side" class="sidenav-menu" opened>
         <mat-action-list>
-            <mat-list-item *ngFor="let dialog of dialogs" (click)="openDialog(dialog.id)" aria-selected="true">
+            <mat-list-item *ngFor="let dialog of dialogs" (click)="openDialog(dialog.id)" [class.sidenav-menu-active]="activeId==dialog.id" aria-selected="true">
                 <div mat-list-icon class="dialog-avatar" style="background-image: url(favicon.ico)"></div>
                 <h5 mat-line>{{dialog.name}} <span class="dot dot-online"></span></h5>
                 <p class="dialog-last" mat-line> {{ dialog.messages.slice(-1)[0].content }} </p>
@@ -9,7 +9,7 @@
         </mat-action-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <div class="message-container">
+        <div id="msgContainer" class="message-container">
             <mat-list>
                 <mat-list-item *ngFor="let message of currentDialog.messages">
                         <div mat-list-icon *ngIf="message.isSender === false" class="dialog-avatar" style="background-image: url(favicon.ico)"></div>
@@ -25,9 +25,10 @@
         <mat-card class="message-input">
             <form class="message-form">
                 <mat-form-field class="message-full-width">
-                    <input matInput placeholder="Message {{ currentDialog.name }}" name="message">
+                    <input matInput placeholder="Message {{ currentDialog.name }}" name="message" 
+                    value="{{ messageInput }}" [(ngModel)]="messageInput" (keyup.enter)="sendMessage()">
                 </mat-form-field>
-                <button mat-icon-button class="send-btn">
+                <button mat-icon-button class="send-btn" (click)="sendMessage()">
                     <mat-icon>send</mat-icon>
                 </button>
             </form>

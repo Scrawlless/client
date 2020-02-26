@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -10,7 +10,7 @@ import { DataService } from "../../../_services/data/data.service";
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent implements OnInit {
+export class MessagesComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private api: ApiService,
@@ -27,6 +27,11 @@ export class MessagesComponent implements OnInit {
   dialogs: any = [];
   currentDialog: any = {};
 
+  messageInput: string = "";
+
+  activeId: any;
+  messageContainer: HTMLElement;
+
   openSnackBar(message: string, action: string) {
     this.notification.open(message, action, {
       duration: 2000,
@@ -42,6 +47,7 @@ export class MessagesComponent implements OnInit {
       this.dialogs = dialogs;
       if(this.dialogs.length > 0){
         this.currentDialog = this.dialogs[0]
+        this.activeId = this.currentDialog.id;
       }
     });
 
@@ -55,11 +61,24 @@ export class MessagesComponent implements OnInit {
     });
   }
 
+  ngAfterViewChecked() {         
+    this.messageContainer = document.getElementById("msgContainer");             
+  }  
+
   openDialog(id: any): void {
     this.currentDialog = this.dialogs.find((dialog: any) => {
       return dialog.id === id
     });
+    this.activeId = this.currentDialog.id;
+    this.messageContainer.scrollTop = this.messageContainer.scrollHeight;
+  }
 
+  sendMessage(): void {
+    if(this.messageInput.length > 0) {
+      this.currentDialog.messages.push({content: this.messageInput, isSender: true});
+      this.messageInput = "";
+      this.messageContainer.scrollTop = this.messageContainer.scrollHeight;
+    }
   }
 
 }
