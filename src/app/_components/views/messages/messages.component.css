@@ -1,0 +1,109 @@
+.sidenav-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.sidenav-menu {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 16em;
+}
+
+.sidenav-menu-active {
+    background-color: #eeeeee;
+}
+
+.message-input {
+    border-radius: 0;
+    background-color: #ffffff;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.mat-drawer-content {
+    overflow: hidden;
+}
+
+.message-full-width {
+    width: 100%;
+}
+
+.send-btn {
+    position: absolute;
+    right: 8px;
+    top: 4px;
+    bottom: 0;
+}
+
+.dot {
+    height: 8px;
+    width: 8px;
+    margin-bottom: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-online {
+    background-color: #5EBA7D;
+}
+
+.dialog-btn {
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+.dialog-avatar {
+    height: 40px !important;
+    width: 40px !important;
+    background-position: center;
+    background-size: contain;
+    border-radius: 50%;
+}
+
+.dialog-name-right {
+    padding-left: 0 !important;
+    padding-right: 16px !important;
+    text-align: right;
+}
+
+.dialog-last {
+    color: #999999;
+    font-size: 12px !important;
+}
+
+.message-content {
+    color: #525252;
+}
+
+.message-content-right {
+    color: #525252;
+    text-align: right;
+    padding-left: 0 !important;
+    padding-right: 16px !important;
+}
+
+.dialog-avatar-right {
+    height: 40px !important;
+    width: 40px !important;
+    background-position: center;
+    background-size: contain;
+    border-radius: 50%;
+    order: 10;
+}
+
+.message-container {
+    overflow: auto;
+    height: 100%;
+}
+

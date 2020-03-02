@@ -1,1 +1,37 @@
-<p>messages works!</p>
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav mode="side" class="sidenav-menu" opened>
+        <mat-action-list>
+            <mat-list-item *ngFor="let dialog of dialogs" (click)="openDialog(dialog.id)" [class.sidenav-menu-active]="activeId==dialog.id" aria-selected="true">
+                <div mat-list-icon class="dialog-avatar" style="background-image: url(favicon.ico)"></div>
+                <h5 mat-line>{{dialog.name}} <span class="dot dot-online"></span></h5>
+                <p class="dialog-last" mat-line> {{ dialog.messages.slice(-1)[0].content }} </p>
+            </mat-list-item>
+        </mat-action-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div id="msgContainer" class="message-container">
+            <mat-list>
+                <mat-list-item *ngFor="let message of currentDialog.messages">
+                        <div mat-list-icon *ngIf="message.isSender === false" class="dialog-avatar" style="background-image: url(favicon.ico)"></div>
+                        <h4 mat-line *ngIf="message.isSender === false" class="dialog-name">{{ currentDialog.name }}</h4>
+                        <p class="message-content" *ngIf="message.isSender === false" mat-line> {{ message.content }} </p>
+
+                        <h4 mat-line *ngIf="message.isSender" class="dialog-name-right">{{ user.name }}</h4>
+                        <p class="message-content-right" *ngIf="message.isSender" mat-line> {{ message.content }} </p>
+                        <div mat-list-icon *ngIf="message.isSender" class="dialog-avatar-right" style="background-image: url(favicon.ico)"></div>
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <mat-card class="message-input">
+            <form class="message-form">
+                <mat-form-field class="message-full-width">
+                    <input matInput placeholder="Message {{ currentDialog.name }}" name="message" 
+                    value="{{ messageInput }}" [(ngModel)]="messageInput" (keyup.enter)="sendMessage()">
+                </mat-form-field>
+                <button mat-icon-button class="send-btn" (click)="sendMessage()">
+                    <mat-icon>send</mat-icon>
+                </button>
+            </form>
+        </mat-card>
+    </mat-sidenav-content>
+</mat-sidenav-container>
