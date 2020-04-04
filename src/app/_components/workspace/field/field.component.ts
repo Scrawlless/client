@@ -44,13 +44,11 @@ export class FieldComponent implements OnInit {
   deb(msg) {
     this.debug.count++;
     this.debug.msg.unshift(this.debug.count + " | " + msg)
-    console.log(msg);
   }
 
   clearDeb() {
     this.debug.count = 0;
     this.debug.msg = ["0 | Clear"];
-    console.log("Cleared");
   }
 
   user: any;
@@ -469,7 +467,6 @@ export class FieldComponent implements OnInit {
   //region Writing Module //
 
   getCharacter(val) {
-    console.log(val);
     switch (val) {
       case 1:
         return "&#xe900;";
@@ -1128,7 +1125,6 @@ export class FieldComponent implements OnInit {
           lastDI.di.s += 0.73;
           lastDI.di.value = String(lastDI.di.value) + String(val);
           lastDI.di.text += this.getCharacter(val);
-          console.log(lastDI.di.value);
 
           //region Addition to History
           hist.diForRedo = Object.assign({}, this.lines[line].di[lastDI.id]);
@@ -1436,7 +1432,6 @@ export class FieldComponent implements OnInit {
 
 
   writePw(): any {
-    console.log(this.lines);
     if (this.selection.line != null) {
       let line = this.selection.line;
       let ex = this.selection.ex;
@@ -1453,7 +1448,6 @@ export class FieldComponent implements OnInit {
           lastDI.id = this.lines[line].ex[ex].cd[i];
         }
       }
-      console.log(lastDI);
 
       if (lastDI.di.type != "brackets") {
         for (var i = 0; i < this.lines[line].ex[ex].cd.length; i++) {
@@ -1602,7 +1596,6 @@ export class FieldComponent implements OnInit {
         });
       }
     } else {
-      console.log("error");
     }
   }
 
@@ -2362,7 +2355,6 @@ export class FieldComponent implements OnInit {
         });
 
       interact('#cover').on('down', function (event) {
-        console.log(event);
         if (this.modeType != "") {
           this.deb("DOWN WITH TOUCH");
           this.container.nativeElement.attributes.class.value = "touch";
@@ -2588,9 +2580,6 @@ export class FieldComponent implements OnInit {
               geoPoint.x = Math.round((this.setSX(offsetX)) / 10) * 10;
               geoPoint.y = Math.round((this.setSY(offsetY)) / 10) * 10;
               this.draw(this.modeType, geoPoint);
-              console.log(this.container.nativeElement.attributes)
-              console.log(this.container.nativeElement.attributes.class)
-              console.log(this.container.nativeElement.attributes.class.value)
               this.container.nativeElement.attributes.class.value = "";
               break;
             }
@@ -2896,7 +2885,6 @@ export class FieldComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.container);
     this.route.params.subscribe(params => {
       this.id = +params['id'];
     });
@@ -2938,9 +2926,7 @@ export class FieldComponent implements OnInit {
     this.loading = false;
     this.ref.detectChanges();
     setTimeout(function () {
-      console.log(this.container)
       this.initUI(1);
-      console.log(this.container)
     }.bind(this), 10);
   }
 
