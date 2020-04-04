@@ -1,6 +1,10 @@
 <div class="primary-color toolbar">
-    <img src="../../../../assets/title_small.png">
-    <button mat-flat-button class="accent-color" *ngIf="!mobile" [matMenuTriggerFor]="profile_menu" [disabled]="(mobile && drawer.opened)">
+    <div style="display: flex; align-items: center;">
+        <img src="../../../../assets/title_small.png">
+        <span style="margin-left: 20px; font-size: 20px; font-weight: bold; text-shadow: 2px 2px 2px #ed7e28, 4px 4px 4px #363636;">Demo</span>
+    </div>
+    <button mat-flat-button class="accent-color" *ngIf="!mobile" [matMenuTriggerFor]="profile_menu"
+        [disabled]="(mobile && drawer.opened)">
         <div style="display: flex; align-items: center; justify-content: space-between;">
             <span style="margin-right: 5px;">{{ user.name }}</span>
             <div class="avatar"></div>

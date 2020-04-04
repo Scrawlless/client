@@ -51,14 +51,14 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
       }
     });
 
-    this.api.test("Messages").subscribe((result: any) => {
+    /*this.api.test("Messages").subscribe((result: any) => {
       this.openSnackBar(result.message, "Nice 👌");
       this.appData.changeTitle(result.message);
       this.loading = false;
     }, (err) => {
       this.openSnackBar(err.error.message, "Not Good 👎");
       this.loading = false;
-    });
+    });*/
   }
 
   ngAfterViewChecked() {         

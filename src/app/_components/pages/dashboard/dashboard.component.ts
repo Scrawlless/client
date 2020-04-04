@@ -57,13 +57,13 @@ export class DashboardComponent implements OnInit {
       this.user = user;
     });
 
-    this.api.test("Dashboard").subscribe((result: any) => {
+    /*this.api.test("Dashboard").subscribe((result: any) => {
       this.openSnackBar(result.message, "Nice 👌");
       this.loading = false;
     }, (err) => {
       this.openSnackBar(err.error.message, "Not Good 👎");
       this.loading = false;
-    });
+    });*/
   }
 
   ngOnDestroy(): void {

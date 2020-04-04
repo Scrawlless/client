@@ -116,9 +116,9 @@ export class DataService {
         friend_id: 1,
         id: 0,
         messages: [
-          {content: "hi", isSender: false},
-          {content: "hello, how are you?", isSender: true},
-          {content: "I am doing fine, thank you", isSender: false}
+          { content: "hi", isSender: false },
+          { content: "hello, how are you?", isSender: true },
+          { content: "I am doing fine, thank you", isSender: false }
         ]
       },
       {
@@ -126,10 +126,10 @@ export class DataService {
         friend_id: 3,
         id: 1,
         messages: [
-          {content: "hello", isSender: false},
-          {content: "hi", isSender: false},
-          {content: "you there?", isSender: false},
-          {content: "hello???", isSender: false}
+          { content: "hello", isSender: false },
+          { content: "hi", isSender: false },
+          { content: "you there?", isSender: false },
+          { content: "hello???", isSender: false }
         ]
       }
     ]);
