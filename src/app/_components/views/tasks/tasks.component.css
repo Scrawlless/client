@@ -1,0 +1,15 @@
+
+
+.card {
+    max-width: 400px;
+    margin: 20px;
+}
+  
+.header-image {
+    height: 40px !important;
+    width: 40px !important;
+    background-image: url("../../../../assets/favicon.ico");
+    background-position: center;
+    background-size: contain;
+    border-radius: 50%;
+}

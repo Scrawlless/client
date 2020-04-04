@@ -207,11 +207,12 @@
 .termsList {
   display: flex;
   justify-content: center;
-  margin: 10px 0;
 }
 
 .termsList h3 {
   margin: 0 5px;
+  font-size: 25px;
+  margin-bottom: 20px;
 }
 
 .termsActions {
