@@ -3,7 +3,8 @@
         padding: 0px !important;
     }
 
-    .squareSingle button, .tools button {
+    .squareSingle button,
+    .tools button {
         background-color: #ed7e28;
     }
 
@@ -328,7 +329,7 @@
     </mat-card>
 
     <mat-card class="ui squareSingle exitToApp">
-        <button mat-fab color="accent" (click)="exit()" md-fab>
+        <button mat-fab color="accent" routerLink="/dash/tasks" md-fab>
             <mat-icon>exit_to_app</mat-icon>
         </button>
     </mat-card>
