@@ -13,6 +13,51 @@
 
 <body class="mat-typography">
   <root></root>
+  <script>
+    function $(o) {
+      var r = false;
+      if (document.querySelectorAll) {
+        r = document.querySelectorAll(o);
+      }
+      return r;
+    }
+
+    if (localStorage.getItem("currentUserEmail")) {
+      userEmail = localStorage.getItem("currentUserEmail");
+    }
+
+    function editor_fullscreen() {
+      //e.preventDefault();
+      if ($('body')[0].requestFullscreen) {
+        $('body')[0].requestFullscreen();
+      } else if ($('body')[0].mozRequestFullScreen) {
+        $('body')[0].mozRequestFullScreen();
+      } else if ($('body')[0].webkitRequestFullScreen) {
+        $('body')[0].webkitRequestFullScreen();
+      } else if ($('body')[0].msRequestFullscreen) {
+        $('body')[0].msRequestFullscreen();
+      } else if (e.target.msRequestFullScreen) {
+        //alert('e.targe.parent.parent.parent.parent....');
+      } else {
+        console.log('DEveloper: full screen support is not detected; check method letter casing?');
+      }
+    }
+
+    function editor_exitFullscreen() {
+      // e.preventDefault();
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.webkitCancelFullScreen) {
+        document.webkitCancelFullScreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+  </script>
 </body>
 
 </html>

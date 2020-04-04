@@ -1,4 +1,12 @@
 <style>
+    /deep/ .mat-button-wrapper {
+        padding: 0px !important;
+    }
+
+    .squareSingle button, .tools button {
+        background-color: #ed7e28;
+    }
+
     /deep/ .expression {
         fill: transparent;
         stroke-linecap: round;
@@ -325,11 +333,11 @@
         </button>
     </mat-card>
 
-    <mat-card class="ui squareSingle download">
+    <!--<mat-card class="ui squareSingle download">
         <button mat-fab color="accent" (click)="saveAsSvg();" md-fab>
             <mat-icon>file_download</mat-icon>
         </button>
-    </mat-card>
+    </mat-card>-->
 
     <mat-card *ngIf="terms.length != 0" class="ui squareSingle termsCard">
         <div style="position: absolute; top: -2vw; right: -2vw; width: 4vw; height: 4vw;">
@@ -338,7 +346,7 @@
             </button>
         </div>
         <div style="display: flex; justify-content: center;">
-            <h2>Посчитать</h2>
+            <h2>Calculate:</h2>
         </div>
         <div class="termsList">
             <h3 *ngFor="let term of terms; let i = index">{{ term }}</h3>

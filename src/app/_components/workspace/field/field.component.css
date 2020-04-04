@@ -272,7 +272,7 @@
 }
 
 .selectedTool {
-  background-color: #fff;
+  background-color: #fff !important;
   color: #ed7e28;
 }
 
