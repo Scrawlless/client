@@ -27,14 +27,17 @@ export class TasksComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.api.test("Tasks").subscribe((result: any) => {
-      this.openSnackBar(result.message, "Nice 👌");
-      this.appData.changeTitle(result.message);
-      this.loading = false;
-    }, (err) => {
-      this.openSnackBar(err.error.message, "Not Good 👎");
-      this.loading = false;
-    });
+    /*this.api.test("Tasks").subscribe(
+      (result: any) => {
+        this.openSnackBar(result.message, "Nice 👌");
+        this.appData.changeTitle(result.message);
+        this.loading = false;
+      },
+      (err) => {
+        this.openSnackBar(err.error.message, "Not Good 👎");
+        this.loading = false;
+      }
+    );*/
   }
 
 }
