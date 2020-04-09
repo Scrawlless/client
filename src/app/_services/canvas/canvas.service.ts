@@ -9,14 +9,13 @@ export class CanvasService {
 
   constructor() { }
 
-  stage(width, height, scale): Konva.Stage {
+  stage(width, height): Konva.Stage {
     return new Konva.Stage({
       container: 'container',
       width: width,
       height: height,
-      draggable: true,
       x: width / 2,
-      y: height / 2 * scale,
+      y: height / 2,
       offsetX: width / 2,
       offsetY: height / 2
     });

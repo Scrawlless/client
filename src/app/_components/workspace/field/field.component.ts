@@ -44,13 +44,12 @@ export class FieldComponent implements OnInit {
 
     var width = window.innerWidth;
     var height = window.innerHeight;
-    var sheight = height - 40;
+    var sheight = height;
     var swidth = sheight * (210 / 297);
 
     var lastDist = 0;
-    var startScale = (width - 20) / (swidth);
 
-    var stage = this.shapes.stage(width, height, startScale)
+    var stage = this.shapes.stage(width, height);
 
     var group = new Konva.Group({
       x: width / 2,
@@ -97,7 +96,27 @@ export class FieldComponent implements OnInit {
       group.add(line);
     }
 
-    stage.on('touchmove', function (e) {
+    var rect = new Konva.Rect({
+      x: 80,
+      y: 80,
+      width: 20,
+      height: 20,
+      fill: 'blue',
+      stroke: 'black',
+      strokeWidth: 0.5,
+      offsetX: 10,
+      offsetY: 10,
+      shadowColor: 'black',
+      shadowBlur: 1,
+      shadowOffset: { x: 0.5, y: 0.5 },
+      shadowOpacity: 0.5
+    });
+
+    group.add(rect);
+
+    var started = false;
+
+    group.on('touchmove', function (e) {
       e.evt.preventDefault();
       var touch1 = e.evt.touches[0];
       var touch2 = e.evt.touches[1];
@@ -114,20 +133,45 @@ export class FieldComponent implements OnInit {
           }
         );
 
+        var midPoint = {
+          x: (touch1.clientX + touch2.clientX) / 2,
+          y: (touch1.clientY + touch2.clientY) / 2
+        }
+
+        if (!started) {
+          var groupInfo = group.getClientRect();
+          var groupW = groupInfo.width;
+          var groupH = groupInfo.height;
+          var groupX = groupInfo.x;
+          var groupY = groupInfo.y;
+
+          var actualX = (midPoint.x - groupX) * (swidth / groupW);
+          var actualY = (midPoint.y - groupY) * (sheight / groupH);
+          group.offsetX(actualX);
+          group.offsetY(actualY);
+          started = true;
+        }
+
+        group.x(midPoint.x);
+        group.y(midPoint.y);
+
         if (!lastDist) {
           lastDist = dist;
         }
 
-        var scale = (stage.scaleX() * dist) / lastDist;
+        var scaleX = (group.scaleX() * dist) / lastDist;
+        var scaleY = (group.scaleY() * dist) / lastDist;
 
-        stage.scaleX(scale);
-        stage.scaleY(scale);
+        group.scaleX(scaleX);
+        group.scaleY(scaleY);
+
         stage.batchDraw();
         lastDist = dist;
       }
     });
 
-    stage.on('touchend', function () {
+    stage.on('touchend', function (e) {
+      started = false;
       lastDist = 0;
     });
 
@@ -135,8 +179,8 @@ export class FieldComponent implements OnInit {
     stage.add(layer);
     layer.draw();
 
-    stage.scaleX(startScale);
-    stage.scaleY(startScale);
+    stage.scaleX(1);
+    stage.scaleY(1);
     stage.batchDraw();
   }
 
