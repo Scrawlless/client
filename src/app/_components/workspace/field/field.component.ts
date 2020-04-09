@@ -24,6 +24,9 @@ export class FieldComponent implements OnInit {
 
   loading: boolean = false;
 
+  group: any;
+  stage: any;
+
   openSnackBar(message: string, action: string) {
     this.notification.open(message, action, {
       duration: 2000,
@@ -32,6 +35,15 @@ export class FieldComponent implements OnInit {
 
   ngOnInit(): void {
     this.render();
+  }
+
+  zoom(scale: number, event: any = null): void {
+    scale = this.group.scaleX() + scale * this.group.scaleX();
+    if (scale <= 7 && scale >= 0.5) {
+      this.group.scaleX(scale);
+      this.group.scaleY(scale);
+      this.stage.batchDraw();
+    }
   }
 
   render(): void {
@@ -47,10 +59,6 @@ export class FieldComponent implements OnInit {
     var sheight = height;
     var swidth = sheight * (210 / 297);
 
-    var lastDist = 0;
-
-    var stage = this.shapes.stage(width, height);
-
     var group = new Konva.Group({
       x: width / 2,
       y: height / 2,
@@ -60,37 +68,46 @@ export class FieldComponent implements OnInit {
       offsetY: sheight / 2
     });
 
-    var layer = new Konva.Layer();
-    var count = (sheight / 30);
-
     var rect = new Konva.Rect({
       x: swidth / 2,
       y: sheight / 2,
       width: swidth,
       height: sheight,
       fill: 'transparent',
-      stroke: 'black',
-      strokeWidth: 0.5,
+      stroke: '#69b0b7',
+      strokeWidth: 1,
       offsetX: swidth / 2,
-      offsetY: sheight / 2,
-      shadowColor: 'black',
-      shadowBlur: 1,
-      shadowOffset: { x: 0.5, y: 0.5 },
-      shadowOpacity: 0.5
+      offsetY: sheight / 2
     });
 
     group.add(rect);
 
-    for (var i = 1; i < Math.round(sheight / count); i++) {
+
+    var hCount = (sheight / 30);
+    var wCount = (swidth / 30);
+
+    console.log(hCount);
+    console.log(wCount);
+    console.log(Math.round(sheight / hCount));
+    console.log(Math.round(swidth / wCount));
+
+    for (var i = 1; i < Math.round(hCount - 1); i++) {
 
       var line = new Konva.Line({
-        points: [0.25, i * count, swidth - 0.25, i * count],
-        stroke: '#675fec',
-        strokeWidth: 1,
-        shadowColor: 'black',
-        shadowBlur: 1,
-        shadowOffset: { x: 0.5, y: 0.5 },
-        shadowOpacity: 0.5
+        points: [0.25, i * hCount, swidth - 0.25, i * hCount],
+        stroke: '#69b0b7',
+        strokeWidth: 0.7
+      });
+
+      group.add(line);
+    }
+
+    for (var i = 1; i < Math.round(wCount); i++) {
+
+      var line = new Konva.Line({
+        points: [i * hCount, 0.25, i * hCount, sheight - 0.25],
+        stroke: '#69b0b7',
+        strokeWidth: 0.7
       });
 
       group.add(line);
@@ -114,7 +131,10 @@ export class FieldComponent implements OnInit {
 
     group.add(rect);
 
+    var stage = this.shapes.stage(width, height);
+
     var started = false;
+    var lastDist = 0;
 
     group.on('touchmove', function (e) {
       e.evt.preventDefault();
@@ -152,18 +172,18 @@ export class FieldComponent implements OnInit {
           started = true;
         }
 
-        group.x(midPoint.x);
-        group.y(midPoint.y);
+        group.position(midPoint);
 
         if (!lastDist) {
           lastDist = dist;
         }
 
-        var scaleX = (group.scaleX() * dist) / lastDist;
-        var scaleY = (group.scaleY() * dist) / lastDist;
+        var scale = (group.scaleX() * dist) / lastDist;
 
-        group.scaleX(scaleX);
-        group.scaleY(scaleY);
+        if (scale <= 7 && scale >= 0.5) {
+          group.scaleX(scale);
+          group.scaleY(scale);
+        }
 
         stage.batchDraw();
         lastDist = dist;
@@ -175,6 +195,8 @@ export class FieldComponent implements OnInit {
       lastDist = 0;
     });
 
+    var layer = new Konva.Layer();
+
     layer.add(group);
     stage.add(layer);
     layer.draw();
@@ -182,6 +204,9 @@ export class FieldComponent implements OnInit {
     stage.scaleX(1);
     stage.scaleY(1);
     stage.batchDraw();
+
+    this.group = group;
+    this.stage = stage;
   }
 
 }
