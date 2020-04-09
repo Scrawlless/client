@@ -156,21 +156,11 @@ export class FieldComponent implements OnInit {
           last_coords = coords;
         }
 
-        /*var a_slope = (last_coords[1].y - last_coords[0].y) / (last_coords[1].x - last_coords[0].y);
-        var b_slope = (coords[1].y - coords[0].y) / (coords[1].x - coords[0].x);
-        var angle_tan = (b_slope - a_slope) / (1 + a_slope * b_slope);
-        var angle = Math.atan(angle_tan);*/
+        var m1 = (last_coords[1].y - last_coords[0].y) / (last_coords[1].x - last_coords[0].x)
+        var m2 = (coords[1].y - coords[0].y) / (coords[1].x - coords[0].x)
+        var angle_deg = -(Math.atan(m1) - Math.atan(m2)) * 180 / Math.PI;
 
-        var l1 = [[last_coords[0].x, last_coords[0].y], [last_coords[1].x, last_coords[1].y]]
-        var l2 = [[coords[0].x, coords[0].y], [coords[1].x, coords[1].y]]
-        var m1 = (l1[1][1] - l1[0][1]) / (l1[1][0] - l1[0][0])
-        var m2 = (l2[1][1] - l2[0][1]) / (l2[1][0] - l2[0][0])
-
-        var angle_rad = Math.atan(m1) - Math.atan(m2)
-        var angle_deg = angle_rad * 180 / Math.PI;
-
-        group.rotate(-angle_deg);
-
+        group.rotate(angle_deg);
 
         var dist = getDistance(coords[0], coords[1]);
 
