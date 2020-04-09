@@ -56,85 +56,85 @@ export class FieldComponent implements OnInit {
 
     var width = window.innerWidth;
     var height = window.innerHeight;
-    var sheight = height;
-    var swidth = sheight * (210 / 297);
+
+    var cells_w = 34;
+    var cells_h = 40;
+    var side_w = 5;
+    var cells_s = 40;
+
+    var cell_stroke = 0.7;
+    var field_stroke = 2;
+
+    var field_h = cells_h * cells_s;
+    var field_w = cells_w * cells_s;
 
     var group = new Konva.Group({
       x: width / 2,
       y: height / 2,
-      width: swidth,
-      height: sheight,
-      offsetX: swidth / 2,
-      offsetY: sheight / 2
+      width: field_w,
+      height: field_h,
+      offsetX: field_w / 2,
+      offsetY: field_h / 2
     });
 
     var rect = new Konva.Rect({
-      x: swidth / 2,
-      y: sheight / 2,
-      width: swidth,
-      height: sheight,
-      fill: 'transparent',
+      x: field_w / 2,
+      y: field_h / 2,
+      width: field_w,
+      height: field_h,
+      fill: 'white',
       stroke: '#69b0b7',
-      strokeWidth: 1,
-      offsetX: swidth / 2,
-      offsetY: sheight / 2
+      strokeWidth: field_stroke,
+      offsetX: field_w / 2,
+      offsetY: field_h / 2
     });
 
     group.add(rect);
 
-
-    var hCount = (sheight / 30);
-    var wCount = (swidth / 30);
-
-    console.log(hCount);
-    console.log(wCount);
-    console.log(Math.round(sheight / hCount));
-    console.log(Math.round(swidth / wCount));
-
-    for (var i = 1; i < Math.round(hCount - 1); i++) {
-
+    for (var i = 0; i < cells_h; i++) {
       var line = new Konva.Line({
-        points: [0.25, i * hCount, swidth - 0.25, i * hCount],
+        points: [0, i * cells_s, field_w, i * cells_s],
         stroke: '#69b0b7',
-        strokeWidth: 0.7
+        strokeWidth: cell_stroke
       });
-
       group.add(line);
     }
 
-    for (var i = 1; i < Math.round(wCount); i++) {
-
+    for (var i = 0; i < cells_w; i++) {
       var line = new Konva.Line({
-        points: [i * hCount, 0.25, i * hCount, sheight - 0.25],
+        points: [i * cells_s, 0, i * cells_s, field_h],
         stroke: '#69b0b7',
-        strokeWidth: 0.7
+        strokeWidth: cell_stroke
       });
-
       group.add(line);
     }
+
+    var line = new Konva.Line({
+      points: [(cells_w - side_w) * cells_s, 0, (cells_w - side_w) * cells_s, field_h],
+      stroke: '#ed7e28',
+      strokeWidth: field_stroke
+    });
+
+    group.add(line);
 
     var rect = new Konva.Rect({
-      x: 80,
-      y: 80,
-      width: 20,
-      height: 20,
-      fill: 'blue',
-      stroke: 'black',
-      strokeWidth: 0.5,
-      offsetX: 10,
-      offsetY: 10,
-      shadowColor: 'black',
-      shadowBlur: 1,
-      shadowOffset: { x: 0.5, y: 0.5 },
-      shadowOpacity: 0.5
+      x: field_w / 2,
+      y: field_h / 2,
+      width: field_w,
+      height: field_h,
+      fill: 'transparent',
+      stroke: '#69b0b7',
+      strokeWidth: field_stroke,
+      offsetX: field_w / 2,
+      offsetY: field_h / 2
     });
 
     group.add(rect);
 
     var stage = this.shapes.stage(width, height);
-
     var started = false;
-    var lastDist = 0;
+    var last_dist = null;
+    var last_coords = null;
 
     group.on('touchmove', function (e) {
       e.evt.preventDefault();
@@ -142,16 +142,39 @@ export class FieldComponent implements OnInit {
       var touch2 = e.evt.touches[1];
 
       if (touch1 && touch2) {
-        var dist = getDistance(
-          {
-            x: touch1.clientX,
-            y: touch1.clientY
-          },
-          {
-            x: touch2.clientX,
-            y: touch2.clientY
-          }
-        );
+
+        var coords = [{
+          x: touch1.clientX,
+          y: touch1.clientY
+        },
+        {
+          x: touch2.clientX,
+          y: touch2.clientY
+        }];
+
+        if (last_coords == null) {
+          last_coords = coords;
+        }
+
+        /*var a_slope = (last_coords[1].y - last_coords[0].y) / (last_coords[1].x - last_coords[0].y);
+        var b_slope = (coords[1].y - coords[0].y) / (coords[1].x - coords[0].x);
+        var angle_tan = (b_slope - a_slope) / (1 + a_slope * b_slope);
+        var angle = Math.atan(angle_tan);*/
+
+        var l1 = [[last_coords[0].x, last_coords[0].y], [last_coords[1].x, last_coords[1].y]]
+        var l2 = [[coords[0].x, coords[0].y], [coords[1].x, coords[1].y]]
+        var m1 = (l1[1][1] - l1[0][1]) / (l1[1][0] - l1[0][0])
+        var m2 = (l2[1][1] - l2[0][1]) / (l2[1][0] - l2[0][0])
+
+        var angle_rad = Math.atan(m1) - Math.atan(m2)
+        var angle_deg = angle_rad * 180 / Math.PI;
+
+        group.rotate(-angle_deg);
+
+
+        var dist = getDistance(coords[0], coords[1]);
+
+        last_coords = coords;
 
         var midPoint = {
           x: (touch1.clientX + touch2.clientX) / 2,
@@ -165,8 +188,8 @@ export class FieldComponent implements OnInit {
           var groupX = groupInfo.x;
           var groupY = groupInfo.y;
 
-          var actualX = (midPoint.x - groupX) * (swidth / groupW);
-          var actualY = (midPoint.y - groupY) * (sheight / groupH);
+          var actualX = (midPoint.x - groupX) * (field_w / groupW);
+          var actualY = (midPoint.y - groupY) * (field_h / groupH);
           group.offsetX(actualX);
           group.offsetY(actualY);
           started = true;
@@ -174,11 +197,11 @@ export class FieldComponent implements OnInit {
 
         group.position(midPoint);
 
-        if (!lastDist) {
-          lastDist = dist;
+        if (!last_dist) {
+          last_dist = dist;
         }
 
-        var scale = (group.scaleX() * dist) / lastDist;
+        var scale = (group.scaleX() * dist) / last_dist;
 
         if (scale <= 7 && scale >= 0.5) {
           group.scaleX(scale);
@@ -186,13 +209,14 @@ export class FieldComponent implements OnInit {
         }
 
         stage.batchDraw();
-        lastDist = dist;
+        last_dist = dist;
       }
     });
 
     stage.on('touchend', function (e) {
       started = false;
-      lastDist = 0;
+      last_coords = null;
+      last_dist = null;
     });
 
     var layer = new Konva.Layer();
