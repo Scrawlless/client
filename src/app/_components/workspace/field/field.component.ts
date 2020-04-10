@@ -52,6 +52,29 @@ export class FieldComponent implements OnInit {
       return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
     }
 
+    function to_rad(degrees) {
+      var pi = Math.PI;
+      return degrees * (pi / 180);
+    }
+
+    function getCircle(x, y, color) {
+      return new Konva.Circle({
+        x: x,
+        y: y,
+        radius: 50,
+        fill: color,
+        stroke: 'black',
+        strokeWidth: 1
+      });
+    }
+    function getLine(x, y) {
+      return new Konva.Line({
+        points: [0, 0, x, y],
+        stroke: 'black',
+        strokeWidth: 1.5
+      });
+    }
+
     Konva.hitOnDragEnabled = true;
 
     var width = window.innerWidth;
@@ -60,7 +83,7 @@ export class FieldComponent implements OnInit {
     var cells_w = 34;
     var cells_h = 40;
     var side_w = 5;
-    var cells_s = 40;
+    var cells_s = 10;
 
     var cell_stroke = 0.7;
     var field_stroke = 2;
@@ -135,6 +158,7 @@ export class FieldComponent implements OnInit {
     var started = false;
     var last_dist = null;
     var last_coords = null;
+    var total_rotation = 0;
 
     group.on('touchmove', function (e) {
       e.evt.preventDefault();
@@ -160,6 +184,8 @@ export class FieldComponent implements OnInit {
         var m2 = (coords[1].y - coords[0].y) / (coords[1].x - coords[0].x)
         var angle_deg = -(Math.atan(m1) - Math.atan(m2)) * 180 / Math.PI;
 
+        total_rotation += angle_deg;
+
         group.rotate(angle_deg);
 
         var dist = getDistance(coords[0], coords[1]);
@@ -173,15 +199,27 @@ export class FieldComponent implements OnInit {
 
         if (!started) {
           var groupInfo = group.getClientRect();
-          var groupW = groupInfo.width;
-          var groupH = groupInfo.height;
-          var groupX = groupInfo.x;
-          var groupY = groupInfo.y;
+          var scale = group.getAbsoluteScale().x;
 
-          var actualX = (midPoint.x - groupX) * (field_w / groupW);
-          var actualY = (midPoint.y - groupY) * (field_h / groupH);
-          group.offsetX(actualX);
-          group.offsetY(actualY);
+          var angle = to_rad(group.getAbsoluteRotation());
+
+          var bound_x = Math.cos(angle) * field_w * scale;
+          var bound_y = Math.abs(Math.sin(angle) * field_w * scale);
+
+          var x = midPoint.x;
+          var y = midPoint.y;
+
+          var relative_x = (x - groupInfo.x) / scale;
+          var relative_y = (y - (groupInfo.y + bound_y)) / scale;
+
+
+          var newActualX = relative_x * Math.cos(-angle) - relative_y * Math.sin(-angle);
+          var newActualY = relative_x * Math.sin(-angle) + relative_y * Math.cos(-angle);
+
+          //group.add(getCircle(newActualX, newActualY, "green"));
+
+          group.offsetX(newActualX);
+          group.offsetY(newActualY);
           started = true;
         }
 
@@ -203,13 +241,103 @@ export class FieldComponent implements OnInit {
       }
     });
 
+    var layer = new Konva.Layer();
+
+    group.scaleX(2.5);
+    group.scaleY(2.5);
+    group.rotate(-60);
+
     stage.on('touchend', function (e) {
       started = false;
       last_coords = null;
       last_dist = null;
+
+      /*var midPoint = {
+        x: e.evt.changedTouches[0].clientX,
+        y: e.evt.changedTouches[0].clientY
+      }
+
+      var groupInfo = group.getClientRect();
+      var scale = group.getAbsoluteScale().x;
+
+      var angle = to_rad(group.getAbsoluteRotation());
+
+      var bound_x = Math.cos(angle) * field_w * scale;
+      var bound_y = Math.abs(Math.sin(angle) * field_w * scale);
+
+      console.log(bound_x, bound_y);
+
+      var x = midPoint.x;
+      var y = midPoint.y;
+
+      var relative_x = (x - groupInfo.x) / scale;
+      var relative_y = (y - (groupInfo.y + bound_y)) / scale;
+
+
+      var newActualX = relative_x * Math.cos(-angle) - relative_y * Math.sin(-angle);
+      var newActualY = relative_x * Math.sin(-angle) + relative_y * Math.cos(-angle);
+
+      layer.add(getCircle(groupInfo.x, groupInfo.y, "blue"));
+      layer.add(getCircle(groupInfo.x + groupInfo.width, groupInfo.y + groupInfo.height, "blue"));
+      layer.add(getCircle(groupInfo.x, groupInfo.y + groupInfo.height, "blue"));
+      layer.add(getCircle(groupInfo.x + groupInfo.width, groupInfo.y, "blue"));
+
+      layer.add(getCircle(groupInfo.x + bound_x, groupInfo.y, "green"));
+      layer.add(getCircle(groupInfo.x, groupInfo.y + bound_y, "pink"));
+
+      group.add(getCircle(newActualX, newActualY, "red"));
+
+      /*if (!isRotated) {
+        group.scaleX(height / field_h);
+        group.scaleY(height / field_h);
+        group.rotate(-45);
+        isRotated = true;
+      }
+
+      total_rotation = -45;
+
+      var midPoint = {
+        x: e.evt.changedTouches[0].clientX,
+        y: e.evt.changedTouches[0].clientY
+      }
+
+      var groupInfo = group.getClientRect();
+      var groupW = groupInfo.width;
+      var groupH = groupInfo.height;
+      var groupX = groupInfo.x;
+      var groupY = groupInfo.y;
+
+      var angle = to_rad(360 - total_rotation);
+
+
+      var actualX = (midPoint.x - groupX) * (groupW / field_w);
+      var actualY = (midPoint.y - groupY) * (groupH / field_h);
+
+
+      var newActualX = actualX * Math.cos(angle) - actualY * Math.sin(angle);
+      var newActualY = actualX * Math.sin(angle) + actualY * Math.cos(angle);
+
+      console.log("===========||===========")
+      console.log(total_rotation, "->", angle);
+      console.log(actualX, actualY);
+      console.log(newActualX, newActualY);
+      
+      var newActualX = actualX * Math.cos(angle) - actualY * Math.sin(angle);
+      var newActualY = actualX * Math.sin(angle) + actualY * Math.cos(angle);
+
+      group.add(getLine(midPoint.x, midPoint.y));
+      group.add(getLine(actualX, actualY));
+      group.add(getLine(newActualX, newActualX));
+
+      group.add(getCircle(midPoint.x, midPoint.y, "blue"));
+      group.add(getCircle(actualX, actualY, "green"));
+      group.add(getCircle(newActualX, newActualX, "red"));
+      group.add(getCircle(20, 20, "red"));*/
+
+
+      stage.batchDraw();
     });
 
-    var layer = new Konva.Layer();
 
     layer.add(group);
     stage.add(layer);
