@@ -16,8 +16,9 @@ export class FieldModel {
     field_h: number; // Field height.
     field_w: number; // Field width.
 
-    scale_min: number; // Minimal scale
-    scale_max: number; // Maximal scale
+    scale_min: number; // Minimal scale.
+    scale_max: number; // Maximal scale.
+    scale_initial: number; // Initial scale.
 
     started: boolean = false; // If drag started.
     last_dist: number = null; // Last distance between touches.
@@ -50,6 +51,8 @@ export class FieldModel {
 
         this.scale_min = min_height_scale < min_width_scale ? min_height_scale : min_width_scale;
         this.scale_max = this.scale_min * 5;
+
+        this.scale_initial = this.scale_min;
     }
 
     render(): void {
@@ -66,8 +69,10 @@ export class FieldModel {
 
         this.draw_markings();
 
-        this.group.on('touchmove', this.drag_handler, { passive: true });
-        this.group.on('touchend', this.touch_handler, { passive: true });
+        this.change_scale(this.scale_initial);
+
+        this.group.on('touchmove', this.drag_handler);
+        this.group.on('touchend', this.touch_handler);
 
         this.stage = this.get_stage(this.width, this.height);
 
@@ -94,7 +99,6 @@ export class FieldModel {
         this.group.scaleX(scale);
         this.group.scaleY(scale);
     }
-
 
     private drag_handler = (e) => {
         e.evt.preventDefault();
