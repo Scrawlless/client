@@ -4,11 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ApiService } from '../../../_services/api/api.service';
 import { DataService } from '../../../_services/data/data.service';
-import { CanvasService } from '../../../_services/canvas/canvas.service';
 
 import { FieldModel } from '../../../_models/workspace/field.model'
-
-import * as Konva from 'konva/konva';
 
 @Component({
   selector: 'field',
@@ -20,14 +17,14 @@ export class FieldComponent implements OnInit {
   constructor(
     private api: ApiService,
     private appData: DataService,
-    private shapes: CanvasService,
     private notification: MatSnackBar
-  ) { }
+  ) {
+    this.field = new FieldModel(window.innerWidth, window.innerHeight);
+  }
 
   loading: boolean = false;
 
-  group: any;
-  stage: any;
+  field: FieldModel;
 
   openSnackBar(message: string, action: string) {
     this.notification.open(message, action, {
@@ -36,21 +33,11 @@ export class FieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.render();
+    this.field.render();
   }
 
-  zoom(scale: number, event: any = null): void {
-    scale = this.group.scaleX() + scale * this.group.scaleX();
-    if (scale <= 7 && scale >= 0.5) {
-      this.group.scaleX(scale);
-      this.group.scaleY(scale);
-      this.stage.batchDraw();
-    }
-  }
-
-  render(): void {
-    var field = new FieldModel(window.innerWidth, window.innerHeight);
-    field.render();
+  zoom(raw_scale: number): void {
+    this.field.scale(raw_scale);
   }
 
 }

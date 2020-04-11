@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -15,8 +16,17 @@ export class WorkspaceComponent implements OnInit {
   constructor(
     private api: ApiService,
     private appData: DataService,
+    private mediaMatcher: MediaMatcher,
+    private changeDetectorRef: ChangeDetectorRef,
     private notification: MatSnackBar
-  ) { }
+  ) {
+    this.mobileQuery = this.mediaMatcher.matchMedia('(max-width: 640px)');
+    this._mobileQueryListener = () => { this.changeDetectorRef.detectChanges() };
+    this.mobileQuery.addEventListener("match", this._mobileQueryListener);
+  }
+
+  private mobileQuery: MediaQueryList;
+  private _mobileQueryListener = () => { };
 
   data_subscription: any;
 
@@ -33,20 +43,10 @@ export class WorkspaceComponent implements OnInit {
     this.data_subscription = this.appData.title.subscribe((message) => {
       this.title = message;
     });
-
-    /*this.api.test("Index").subscribe(
-      (result: any) => {
-        this.openSnackBar(result.message, "Nice 👌");
-        this.loading = false;
-      },
-      (err) => {
-        this.openSnackBar(err.error.message, "Not Good 👎");
-        this.loading = false;
-      }
-    );*/
   }
 
   ngOnDestroy(): void {
+    this.mobileQuery.removeEventListener("match", this._mobileQueryListener);
     this.data_subscription.unsubscribe();
   }
 

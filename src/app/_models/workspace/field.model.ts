@@ -16,26 +16,40 @@ export class FieldModel {
     field_h: number; // Field height.
     field_w: number; // Field width.
 
+    scale_min: number; // Minimal scale
+    scale_max: number; // Maximal scale
+
     started: boolean = false; // If drag started.
     last_dist: number = null; // Last distance between touches.
+
 
     stage: Konva.Stage; // Canvas content container.
     group: Konva.Group; // Field content group.
 
     constructor(width: number, height: number) {
+        this.init(width, height);
+    }
+
+    init(width: number, height: number) {
         this.width = width;
         this.height = height;
 
         this.cells_w = 34;
         this.cells_h = 40;
         this.side_w = 5;
-        this.cells_s = 10;
+        this.cells_s = 40;
 
-        this.cell_stroke = 0.7;
-        this.field_stroke = 2;
+        this.cell_stroke = 1.5;
+        this.field_stroke = 4;
 
         this.field_h = this.cells_h * this.cells_s;
         this.field_w = this.cells_w * this.cells_s;
+
+        let min_height_scale = (this.height - (this.cells_s * 2)) / this.field_h;
+        let min_width_scale = (this.width - (this.cells_s * 2)) / this.field_w;
+
+        this.scale_min = min_height_scale < min_width_scale ? min_height_scale : min_width_scale;
+        this.scale_max = this.scale_min * 5;
     }
 
     render(): void {
@@ -53,7 +67,6 @@ export class FieldModel {
         this.draw_markings();
 
         this.group.on('touchmove', this.drag_handler);
-
         this.group.on('touchend', this.touch_handler);
 
         this.stage = this.get_stage(this.width, this.height);
@@ -62,6 +75,26 @@ export class FieldModel {
 
         this.stage.batchDraw();
     }
+
+    scale(raw_scale): void {
+        let scale = this.group.scaleX() + raw_scale;
+        this.change_scale(scale);
+        this.stage.batchDraw();
+    }
+
+    private change_scale(scale): void {
+        if (scale > this.scale_max) {
+            scale = this.scale_max;
+        } else {
+            if (scale < this.scale_min) {
+                scale = this.scale_min;
+            }
+        }
+
+        this.group.scaleX(scale);
+        this.group.scaleY(scale);
+    }
+
 
     private drag_handler = (e) => {
         e.evt.preventDefault();
@@ -86,12 +119,9 @@ export class FieldModel {
                 this.last_dist = dist;
             }
 
-            let scale = (this.group.scaleX() * dist) / this.last_dist;
+            let scale = this.group.scaleX() * dist / this.last_dist;
 
-            if (scale <= 7 && scale >= 0.5) {
-                this.group.scaleX(scale);
-                this.group.scaleY(scale);
-            }
+            this.change_scale(scale)
 
             this.last_dist = dist;
         }

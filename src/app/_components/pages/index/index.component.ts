@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -15,8 +16,17 @@ export class IndexComponent implements OnInit {
   constructor(
     private api: ApiService,
     private appData: DataService,
+    private mediaMatcher: MediaMatcher,
+    private changeDetectorRef: ChangeDetectorRef,
     private notification: MatSnackBar
-  ) { }
+  ) {
+    this.mobileQuery = this.mediaMatcher.matchMedia('(max-width: 640px)');
+    this._mobileQueryListener = () => { this.changeDetectorRef.detectChanges() };
+    this.mobileQuery.addEventListener("match", this._mobileQueryListener);
+  }
+
+  private mobileQuery: MediaQueryList;
+  private _mobileQueryListener = () => { };
 
   data_subscription: any;
 
@@ -49,6 +59,7 @@ export class IndexComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
+    this.mobileQuery.removeEventListener("match", this._mobileQueryListener);
     this.data_subscription.unsubscribe();
   }
 

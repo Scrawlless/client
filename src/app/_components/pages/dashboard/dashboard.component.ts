@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -16,13 +17,22 @@ import { LanguageService } from '../../../_services/language/language.service';
 export class DashboardComponent implements OnInit {
 
   constructor(
+    private api: ApiService,
     public auth: AuthService,
     public lang: LanguageService,
     public appData: DataService,
     private router: Router,
-    private api: ApiService,
+    private mediaMatcher: MediaMatcher,
+    private changeDetectorRef: ChangeDetectorRef,
     private notification: MatSnackBar
-  ) { }
+  ) {
+    this.mobileQuery = this.mediaMatcher.matchMedia('(max-width: 640px)');
+    this._mobileQueryListener = () => { this.changeDetectorRef.detectChanges() };
+    this.mobileQuery.addEventListener("match", this._mobileQueryListener);
+  }
+
+  private mobileQuery: MediaQueryList;
+  private _mobileQueryListener = () => { };
 
   title_sub: any;
   mobile_sub: any;
@@ -69,6 +79,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
+    this.mobileQuery.removeEventListener("match", this._mobileQueryListener);
     this.title_sub.unsubscribe();
     this.mobile_sub.unsubscribe();
     this.user_sub.unsubscribe();
