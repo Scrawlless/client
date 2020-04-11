@@ -165,9 +165,15 @@ export class FieldModel {
 
         let point = this.get_actual(raw_point)
 
-        this.group.add(this.get_circle(point.x, point.y, "pink"));
+        this.draw_point(point);
 
         this.stage.batchDraw();
+    }
+
+    private draw_point(point): void {
+        if (point.x > 5 && point.x < this.field_w && point.y > 5 && point.y < this.field_h) {
+            this.group.add(this.get_circle(point.x, point.y, "pink"));
+        }
     }
 
     private draw_markings(): void {
