@@ -17,18 +17,27 @@ export class AppComponent {
 
     this._mobileQueryListener = () => {
       this.appData.updateMobile(this.mobileQuery.matches);
-    };
+    }
+
+    this._resizeListener = () => {
+      this.appData.updateResize({ width: window.innerWidth, height: window.innerHeight });
+    }
 
     if (this.mobileQuery.addEventListener) {
       this.mobileQuery.addEventListener("change", this._mobileQueryListener);
     } else {
       this.mobileQuery.addListener(this._mobileQueryListener);
     }
-    
+
+    window.addEventListener("resize", this._resizeListener);
+
     this.appData.updateMobile(this.mobileQuery.matches);
+    this.appData.updateResize({ width: window.innerWidth, height: window.innerHeight });
   }
 
-  public _mobileQueryListener = () => { };
+  private _mobileQueryListener = () => { };
+  private _resizeListener = () => { };
+
   mobileQuery: MediaQueryList;
 
   title = 'Scrawlless';

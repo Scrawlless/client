@@ -15,6 +15,7 @@ export class DataService {
   dialogs: BehaviorSubject<any>;
   conversations: BehaviorSubject<any>;
   mobile: BehaviorSubject<boolean>;
+  resize: BehaviorSubject<any>;
 
   constructor() {
     this.title = new BehaviorSubject("Default Title");
@@ -116,9 +117,9 @@ export class DataService {
         friend_id: 1,
         id: 0,
         messages: [
-          {content: "hi", isSender: false},
-          {content: "hello, how are you?", isSender: true},
-          {content: "I am doing fine, thank you", isSender: false}
+          { content: "hi", isSender: false },
+          { content: "hello, how are you?", isSender: true },
+          { content: "I am doing fine, thank you", isSender: false }
         ]
       },
       {
@@ -126,35 +127,46 @@ export class DataService {
         friend_id: 3,
         id: 1,
         messages: [
-          {content: "hello", isSender: false},
-          {content: "hi", isSender: false},
-          {content: "you there?", isSender: false},
-          {content: "hello???", isSender: false}
+          { content: "hello", isSender: false },
+          { content: "hi", isSender: false },
+          { content: "you there?", isSender: false },
+          { content: "hello???", isSender: false }
         ]
       }
     ]);
     this.mobile = new BehaviorSubject(undefined);
+    this.resize = new BehaviorSubject(undefined);
   }
 
   changeTitle(message: string) {
     this.title.next(message)
   }
+
   updateUser(user: any) {
     this.user.next(user);
   }
+
   updateTasks(tasks: any) {
     this.tasks.next(tasks);
   }
+
   updateFriends(friends: any) {
     this.friends.next(friends);
   }
+
   updateTeachers(teachers: any) {
     this.teachers.next(teachers);
   }
+
   updateDialogs(dialogs: any) {
     this.dialogs.next(dialogs);
   }
+
   updateMobile(mobile: boolean) {
     this.mobile.next(mobile);
+  }
+
+  updateResize(resize: any) {
+    this.resize.next(resize);
   }
 }

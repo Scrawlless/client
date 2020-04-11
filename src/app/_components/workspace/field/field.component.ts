@@ -23,6 +23,8 @@ export class FieldComponent implements OnInit {
   }
 
   loading: boolean = false;
+  mobile_sub: any;
+  resize_sub: any;
 
   field: FieldModel;
 
@@ -33,11 +35,19 @@ export class FieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.field.render();
+    this.resize_sub = this.appData.resize.subscribe((size) => {
+      this.field.init(window.innerWidth, window.innerHeight);
+      this.field.render();
+    });
   }
 
   zoom(raw_scale: number): void {
     this.field.scale(raw_scale);
+  }
+
+  ngOnDestroy(): void {
+    this.mobile_sub.unsubscribe();
+    this.resize_sub.unsubscribe();
   }
 
 }

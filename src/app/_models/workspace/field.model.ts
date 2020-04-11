@@ -66,8 +66,8 @@ export class FieldModel {
 
         this.draw_markings();
 
-        this.group.on('touchmove', this.drag_handler);
-        this.group.on('touchend', this.touch_handler);
+        this.group.on('touchmove', this.drag_handler, { passive: true });
+        this.group.on('touchend', this.touch_handler, { passive: true });
 
         this.stage = this.get_stage(this.width, this.height);
 
