@@ -171,8 +171,13 @@ export class FieldModel {
     }
 
     private draw_point(point): void {
-        if (point.x > 5 && point.x < this.field_w && point.y > 5 && point.y < this.field_h) {
-            this.group.add(this.get_circle(point.x, point.y, "pink"));
+        var count = this.cells_s / 2;
+
+        var x = Math.floor(point.x / count) * count
+        var y = Math.floor(point.y / count) * count
+
+        if (x > 5 && x < this.field_w && y > 5 && y < this.field_h) {
+            this.group.add(this.get_circle(x, y, "pink"));
         }
     }
 
