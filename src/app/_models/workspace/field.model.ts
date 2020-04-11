@@ -83,21 +83,31 @@ export class FieldModel {
 
     scale(raw_scale): void {
         let scale = this.group.scaleX() + raw_scale;
-        this.change_scale(scale);
+        this.change_scale(scale, false);
         this.stage.batchDraw();
     }
 
-    private change_scale(scale): void {
+    private change_scale(scale: number, touch: boolean = true): void {
         if (scale > this.scale_max) {
             scale = this.scale_max;
         } else {
             if (scale < this.scale_min) {
                 scale = this.scale_min;
+
+                if (!touch) {
+                    this.reset_field_position();
+                }
             }
         }
 
         this.group.scaleX(scale);
         this.group.scaleY(scale);
+    }
+
+    private reset_field_position(): void {
+        this.group.offsetX(this.field_w / 2);
+        this.group.offsetY(this.field_h / 2);
+        this.group.position({ x: this.width / 2, y: this.height / 2 });
     }
 
     private drag_handler = (e) => {
