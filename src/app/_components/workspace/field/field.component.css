@@ -1,19 +1,13 @@
-.render {
+.zoom-m {
     position: fixed;
     bottom: 20px;
     left: 20px;
 }
 
-.zoom-m {
-    position: fixed;
-    bottom: 20px;
-    left: 100px;
-}
-
 .zoom-p {
     position: fixed;
     bottom: 20px;
-    left: 180px;
+    left: 100px;
 }
 
 .container {
