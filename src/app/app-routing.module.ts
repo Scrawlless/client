@@ -5,6 +5,7 @@ import { GuardService } from './_services/guard/guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: "dash", pathMatch: "full" },
+  { path: '', loadChildren: () => import('./_components/pages/dashboard/dashboard.module').then(m => m.DashboardModule), canActivate: [GuardService] },
   { path: 'dash', loadChildren: () => import('./_components/pages/dashboard/dashboard.module').then(m => m.DashboardModule), canActivate: [GuardService] },
   { path: 'workspace', loadChildren: () => import('./_components/pages/workspace/workspace.module').then(m => m.WorkspaceModule), canActivate: [GuardService] }
 ];
