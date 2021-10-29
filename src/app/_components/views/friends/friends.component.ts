@@ -20,7 +20,7 @@ export class FriendsComponent implements OnInit {
 
   loading: boolean = false;
   showSearchBar: boolean = false;
-  
+
   searchText: string;
 
   friends_sub: any;
@@ -53,18 +53,22 @@ export class FriendsComponent implements OnInit {
     });
 
     this.showList('friends');
-    this.api.test("Friends").subscribe((result: any) => {
-      this.openSnackBar(result.message, "Nice 👌");
-      this.appData.changeTitle(result.message);
-      this.loading = false;
-    }, (err) => {
-      this.openSnackBar(err.error.message, "Not Good 👎");
-      this.loading = false;
-    });
+
+    /*this.api.test("Friends").subscribe(
+      (result: any) => {
+        this.openSnackBar(result.message, "Nice 👌");
+        this.appData.changeTitle(result.message);
+        this.loading = false;
+      },
+      (err) => {
+        this.openSnackBar(err.error.message, "Not Good 👎");
+        this.loading = false;
+      }
+    );*/
   }
 
   search(name: string): void {
-    this.results = this.users.filter((user: any)=> user.name.toLowerCase().includes(name.toLowerCase()));
+    this.results = this.users.filter((user: any) => user.name.toLowerCase().includes(name.toLowerCase()));
   }
 
   showList(selection: string): void {

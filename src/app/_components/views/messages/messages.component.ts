@@ -45,25 +45,28 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
 
     this.dialogs_sub = this.appData.dialogs.subscribe((dialogs) => {
       this.dialogs = dialogs;
-      if(this.dialogs.length > 0){
+      if (this.dialogs.length > 0) {
         this.currentDialog = this.dialogs[0]
         this.activeId = this.currentDialog.id;
       }
     });
 
-    this.api.test("Messages").subscribe((result: any) => {
-      this.openSnackBar(result.message, "Nice 👌");
-      this.appData.changeTitle(result.message);
-      this.loading = false;
-    }, (err) => {
-      this.openSnackBar(err.error.message, "Not Good 👎");
-      this.loading = false;
-    });
+    /*this.api.test("Messages").subscribe(
+      (result: any) => {
+        this.openSnackBar(result.message, "Nice 👌");
+        this.appData.changeTitle(result.message);
+        this.loading = false;
+      },
+      (err) => {
+        this.openSnackBar(err.error.message, "Not Good 👎");
+        this.loading = false;
+      }
+    );*/
   }
 
-  ngAfterViewChecked() {         
-    this.messageContainer = document.getElementById("msgContainer");             
-  }  
+  ngAfterViewChecked() {
+    this.messageContainer = document.getElementById("msgContainer");
+  }
 
   openDialog(id: any): void {
     this.currentDialog = this.dialogs.find((dialog: any) => {
@@ -74,8 +77,8 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
   }
 
   sendMessage(): void {
-    if(this.messageInput.length > 0) {
-      this.currentDialog.messages.push({content: this.messageInput, isSender: true});
+    if (this.messageInput.length > 0) {
+      this.currentDialog.messages.push({ content: this.messageInput, isSender: true });
       this.messageInput = "";
       this.scrollToBottom()
     }

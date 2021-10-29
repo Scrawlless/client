@@ -6,11 +6,11 @@ import { ApiService } from '../../../_services/api/api.service';
 import { DataService } from "../../../_services/data/data.service";
 
 @Component({
-  selector: 'tasks',
-  templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.css']
+  selector: 'workspace',
+  templateUrl: './workspace.component.html',
+  styleUrls: ['./workspace.component.css']
 })
-export class TasksComponent implements OnInit {
+export class WorkspaceComponent implements OnInit {
 
   constructor(
     private api: ApiService,
@@ -18,7 +18,10 @@ export class TasksComponent implements OnInit {
     private notification: MatSnackBar
   ) { }
 
+  data_subscription: any;
+
   loading: boolean = false;
+  title: string = "Initial Title";
 
   openSnackBar(message: string, action: string) {
     this.notification.open(message, action, {
@@ -27,17 +30,13 @@ export class TasksComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.api.test("Tasks").subscribe(
-      (result: any) => {
-        this.openSnackBar(result.message, "Nice 👌");
-        this.appData.changeTitle(result.message);
-        this.loading = false;
-      },
-      (err) => {
-        this.openSnackBar(err.error.message, "Not Good 👎");
-        this.loading = false;
-      }
-    );*/
+    this.data_subscription = this.appData.title.subscribe((message) => {
+      this.title = message;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.data_subscription.unsubscribe();
   }
 
 }

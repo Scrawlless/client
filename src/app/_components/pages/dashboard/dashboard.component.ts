@@ -16,11 +16,11 @@ import { LanguageService } from '../../../_services/language/language.service';
 export class DashboardComponent implements OnInit {
 
   constructor(
+    private api: ApiService,
     public auth: AuthService,
     public lang: LanguageService,
     public appData: DataService,
     private router: Router,
-    private api: ApiService,
     private notification: MatSnackBar
   ) { }
 
@@ -55,14 +55,6 @@ export class DashboardComponent implements OnInit {
 
     this.user_sub = this.appData.user.subscribe((user) => {
       this.user = user;
-    });
-
-    this.api.test("Dashboard").subscribe((result: any) => {
-      this.openSnackBar(result.message, "Nice 👌");
-      this.loading = false;
-    }, (err) => {
-      this.openSnackBar(err.error.message, "Not Good 👎");
-      this.loading = false;
     });
   }
 
