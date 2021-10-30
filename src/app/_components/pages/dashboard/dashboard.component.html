@@ -19,31 +19,31 @@
                 <button matRipple class="accent-color round-button" (click)="navigate('/dash/tasks')">
                     <mat-icon>menu_book</mat-icon>
                 </button>
-                <button matRipple class="accent-color round-button" (click)="navigate('/dash/friends')">
+                <!-- <button matRipple class="accent-color round-button" (click)="navigate('/dash/friends')">
                     <mat-icon>people</mat-icon>
                 </button>
                 <button matRipple class="accent-color round-button" (click)="navigate('/dash/messages')">
                     <mat-icon>chat</mat-icon>
-                </button>
+                </button> -->
             </div>
         </div>
     </mat-drawer>
 
-    <div>
+    <div style="height: 100%;">
         <router-outlet></router-outlet>
     </div>
 
 </mat-drawer-container>
 
 <mat-menu #profile_menu="matMenu">
-    <button mat-menu-item (click)="navigate('/dash/profile')">
+    <!-- <button mat-menu-item (click)="navigate('/dash/profile')">
         <mat-icon>person</mat-icon>
         <span>{{lang.t("ep")}}</span>
     </button>
     <button mat-menu-item (click)="navigate('/dash/settings')">
         <mat-icon>settings</mat-icon>
         <span>{{lang.t("eps")}}</span>
-    </button>
+    </button> -->
     <button mat-menu-item (click)="auth.logout();">
         <mat-icon>exit_to_app</mat-icon>
         <span>{{lang.t("lg")}}</span>

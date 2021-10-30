@@ -108,9 +108,8 @@ export class LandingPageComponent implements OnInit {
   logIn(): void {
     this.auth.profile().subscribe(() => {
       this.loading = false;
-      this.router.navigate(["/"]);
+      this.router.navigate(["/dash"]);
     }, (err) => {
-      console.log(err);
       this.loading = false;
       this.auth.logout();
       this.openSnackBar(err.error.message);
