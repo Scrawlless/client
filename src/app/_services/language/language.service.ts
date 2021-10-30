@@ -5,7 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class LanguageService {
   constructor() {
-    this.userLang = navigator.language.indexOf("ru") > -1 ? "ru" : "en";
+    // this.userLang = navigator.language.indexOf("ru") > -1 ? "ru" : "en";
+    this.userLang = "ru";
   }
 
   userLang: any;
@@ -29,7 +30,9 @@ export class LanguageService {
       st: "Settings",
       up: "Upload Photos",
       cf: "Choose File(s)...",
-      upp: "Upload"
+      upp: "Upload",
+      warnwrksp: "You can currently access our editor in the test mode. Work progress won't be saved automatically, but you can download a file with your work.",
+      opnwrksp: "Open editor"
     },
     ru: {
       ep: "Изменить Профиль",
@@ -49,7 +52,9 @@ export class LanguageService {
       st: "Настройки",
       up: "Загрузить Фото",
       cf: "Выберите Файл(ы)...",
-      upp: "Загрузить"
+      upp: "Загрузить",
+      warnwrksp: "На данный момент вы можете использовать программу в тестовом режиме. Работа не будет сохранена, но вы можете скачать файл со своей работы в редакторе.",
+      opnwrksp: "Открыть редактор"
     }
   }
 

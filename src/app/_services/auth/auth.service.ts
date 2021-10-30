@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -69,39 +69,63 @@ export class AuthService {
     }
   }
 
-  private request(method, type, user?: any): Observable<any> {
-    let base;
+  public register(user): Observable<any> {
+    return this.http.post(this.url + `api/register`, user).pipe(
+      map((token: any) => {
+        if (token) {
+          this.saveToken(token);
+          this.updateUserData();
+        }
+        return token;
+      })
+    );
+  }
 
-    if (method === 'post') {
-      base = this.http.post(this.url + `api/${type}`, user);
-    } else {
-      base = this.http.post(this.url + `api/${type}`, {}, { headers: { Authorization: `Bearer ${this.getToken()}` } });
-    }
+  public login(user): Observable<any> {
+    return this.http.post(this.url + `api/login`, user).pipe(
+      map((token: any) => {
+        if (token) {
+          this.saveToken(token);
+          this.updateUserData();
+        }
+        return token;
+      })
+    );
+  }
 
-    const request = base.pipe(
+  // profile(data: any = {}): Observable<Object> {
+  //   var req = JSON.stringify(data);
+
+  //   let headers = new HttpHeaders();
+  //   headers = headers.append('Accept', 'application/json');
+  //   headers = headers.append('Content-Type', 'application/json');
+  //   headers = headers.append("Authorization", `Bearer ${this.getToken()}`);
+
+  //   return this.http.post(this.url + `api/albums.get`, req, { headers: headers }).pipe(
+  //     map((response: Response) => {
+  //       let data: any = response;
+  //       if (data) {
+  //         return data;
+  //       } else {
+  //         return "Error";
+  //       }
+  //     }));
+  // }
+
+  public profile(): Observable<any> {
+
+    let headers = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    headers = headers.append('Content-Type', 'application/json');
+    headers = headers.append("Authorization", `Bearer ${this.getToken()}`);
+
+    return this.http.post(this.url + `api/user.get`, '', { headers }).pipe(
       map((data: any) => {
         if (data.token) {
           this.saveToken(data.token);
-          if (type != "profile") {
-            this.updateUserData();
-          }
         }
         return data;
       })
     );
-
-    return request;
-  }
-
-  public register(user): Observable<any> {
-    return this.request('post', 'register', user);
-  }
-
-  public login(user): Observable<any> {
-    return this.request('post', 'login', user);
-  }
-
-  public profile(): Observable<any> {
-    return this.request('get', 'profile');
   }
 }

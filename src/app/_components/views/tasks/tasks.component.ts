@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { LanguageService } from '../../../_services/language/language.service';
 import { ApiService } from '../../../_services/api/api.service';
 import { DataService } from "../../../_services/data/data.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'tasks',
@@ -15,7 +17,9 @@ export class TasksComponent implements OnInit {
   constructor(
     private api: ApiService,
     private appData: DataService,
-    private notification: MatSnackBar
+    private notification: MatSnackBar,
+    private router: Router,
+    public lang: LanguageService
   ) { }
 
   loading: boolean = false;
@@ -24,6 +28,10 @@ export class TasksComponent implements OnInit {
     this.notification.open(message, action, {
       duration: 2000,
     });
+  }
+
+  navigate(path: string): void {
+    this.router.navigate([path]);
   }
 
   ngOnInit(): void {
